@@ -4,17 +4,12 @@ public class Territory {
 	private ArrayList<Territory> adjacentTerritories;
 	private String name;
 	
-	public Territory() {
-		this.adjacentTerritories = new ArrayList<Territory>();
-		this.name = "";
-	}
-
-	public Territory(ArrayList<Territory> adjacentTerritories, String name) {
-		this.adjacentTerritories = adjacentTerritories;
+	public Territory(String name) {
+		adjacentTerritories = new ArrayList<Territory>();
 		this.name = name;
 	}
 	
 	public ArrayList<Territory> getAdjacentTerritories() {
-		return this.adjacentTerritories;
+		return adjacentTerritories;
 	}
 }
