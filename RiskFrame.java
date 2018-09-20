@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
@@ -11,8 +10,8 @@ public class RiskFrame extends JFrame {
 	private JPanel backgroundPanel;
 	private JTextField textField; 
 	private JTextArea textArea;
-	private final static String newline = "\n";
-	
+	private JScrollPane scrollPane;
+
 	
 	public RiskFrame(String title, int width, int height) {
 		super(title);
@@ -32,33 +31,27 @@ public class RiskFrame extends JFrame {
 			}
 		};
 		backgroundPanel.setLayout(null);
-		//textField = new JTextField(30) ;
-	    // TextField.setFont(new Font("serif", font.BOLD, 24));
-		
 		contentPane.add(backgroundPanel, BorderLayout.CENTER);
-		//contentPane.add(textField, BorderLayout.PAGE_END);
 		pack();
-		
-
 	}
 	
 	public void setTextWindow() {
-		textField = new JTextField("", 30);
-		textField.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent evt) {
-				String text = textField.getText();
-				textField.setText("Hello world.");
-		        textField.selectAll();
-		        textArea.setCaretPosition(textArea.getDocument().getLength());
-				//textField.append(text + newline);
-			}
-		});
-		
-        textArea = new JTextArea(5, 20);
-        textArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        contentPane.add(textField, BorderLayout.PAGE_END);
+        textArea = new JTextArea(5, 0);
+        textArea.setFont(new Font("serif", Font.BOLD, 24));
+        textArea.addKeyListener(new KeyListener() {
+        	public void keyTyped(KeyEvent evt) {
+        		if (evt.getKeyCode() != KeyEvent.VK_ENTER) return;
+        		String text = textArea.getText();
+        		textArea.setText("You said: " + text);
+        		textArea.selectAll();
+        		textArea.setCaretPosition(textArea.getDocument().getLength());
+        	}
+			public void keyPressed(KeyEvent arg0) {	}
+			public void keyReleased(KeyEvent e) { }
+        });
+        scrollPane = new JScrollPane(textArea);
+        contentPane.add(scrollPane, BorderLayout.PAGE_END);
+        pack();
 	}
 	
 	public void addTerritoryButton(String label, int x, int y) {
