@@ -42,50 +42,24 @@ public class RiskFrame extends JFrame implements ActionListener {
 
 	}
 	
-	
-	public void textWindow() {
-		
-		
+	public void setTextWindow() {
 		textField = new JTextField("",30);
 		textField.addActionListener(this);
 		
         textArea = new JTextArea(5, 20);
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
- 
-        //Add Components to this panel.
-
-	
-	
-	contentPane.add(textField, BorderLayout.PAGE_END);
+        contentPane.add(textField, BorderLayout.PAGE_END);
 	}
 
 	public void actionPerformed(ActionEvent evt) {
 		String text = textField.getText();
-		//System.out.println(text);
-		textmiddleman(text);
-		textField.setText("");
-        //textArea.append(text + newline);
-		//return text;
+		textField.setText("Hello world.");
         textField.selectAll();
-      //  return text; 
-        
- 
-        //Make sure the new text is visible, even if there
-        //was a selection in the text area.
         textArea.setCaretPosition(textArea.getDocument().getLength());
 		//textField.append(text + newline);
 		
 	}
-	public String textmiddleman(String r) {
-		System.out.println("middleman is working");
-		System.out.println(r);
-		return r;	
-	}
-			
-		
-		
-	
 	
 	public void addTerritoryButton(String label, int x, int y) {
 		JButton territoryButton = new JButton(label);

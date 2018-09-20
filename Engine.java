@@ -30,8 +30,8 @@ public class Engine {
 				return;
 			}
 			riskFrame.setBackground(bg);
+			riskFrame.setTextWindow();
 			territories = new HashMap<String, Territory>();
-			riskFrame.textWindow();
 			String territoriesFilename = properties.getProperty("territoriesFilename");
 			try(
 					FileInputStream territoriesFileStream = new FileInputStream(territoriesFilename);
