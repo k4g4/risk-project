@@ -31,6 +31,7 @@ public class Engine {
 			}
 			riskFrame.setBackground(bg);
 			territories = new HashMap<String, Territory>();
+			riskFrame.textWindow();
 			String territoriesFilename = properties.getProperty("territoriesFilename");
 			try(
 					FileInputStream territoriesFileStream = new FileInputStream(territoriesFilename);
