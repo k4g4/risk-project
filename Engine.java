@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class Engine {
 	private RiskFrame riskFrame;
-	private ArrayList<Territory> territories;
+	private HashMap<String, Territory> territories;
 	
 	public Engine(String propertiesFile) {
 		Properties properties = new Properties();
@@ -30,7 +30,7 @@ public class Engine {
 				return;
 			}
 			riskFrame.setBackground(bg);
-			territories = new ArrayList<Territory>();
+			territories = new HashMap<String, Territory>();
 			String territoriesFilename = properties.getProperty("territoriesFilename");
 			try(
 					FileInputStream territoriesFileStream = new FileInputStream(territoriesFilename);
@@ -57,12 +57,10 @@ public class Engine {
 		riskFrame.render();
 	}
 	
-	public ArrayList<Territory> getTerritories() {
-		return territories;
-	}
+	public HashMap<String, Territory> getTerritories() { return territories; }
 	
 	public void addTerritory(String title, int x, int y) {
 		riskFrame.addTerritoryButton(title, x, y);
-		territories.add(new Territory(title));
+		territories.put(title, new Territory(title));
 	}
 }
