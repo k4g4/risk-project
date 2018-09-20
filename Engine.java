@@ -30,6 +30,7 @@ public class Engine {
 				return;
 			}
 			riskFrame.setBackground(bg);
+			riskFrame.textWindow();
 			territories = new ArrayList<Territory>();
 			String territoriesFilename = properties.getProperty("territoriesFilename");
 			try(
