@@ -6,7 +6,7 @@ import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class RiskFrame extends JFrame implements ActionListener {
+public class RiskFrame extends JFrame {
 	private Container contentPane;
 	private JPanel backgroundPanel;
 	private JTextField textField; 
@@ -43,22 +43,22 @@ public class RiskFrame extends JFrame implements ActionListener {
 	}
 	
 	public void setTextWindow() {
-		textField = new JTextField("",30);
-		textField.addActionListener(this);
+		textField = new JTextField("", 30);
+		textField.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				String text = textField.getText();
+				textField.setText("Hello world.");
+		        textField.selectAll();
+		        textArea.setCaretPosition(textArea.getDocument().getLength());
+				//textField.append(text + newline);
+			}
+		});
 		
         textArea = new JTextArea(5, 20);
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
         contentPane.add(textField, BorderLayout.PAGE_END);
-	}
-
-	public void actionPerformed(ActionEvent evt) {
-		String text = textField.getText();
-		textField.setText("Hello world.");
-        textField.selectAll();
-        textArea.setCaretPosition(textArea.getDocument().getLength());
-		//textField.append(text + newline);
-		
 	}
 	
 	public void addTerritoryButton(String label, int x, int y) {
