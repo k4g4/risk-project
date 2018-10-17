@@ -1,0 +1,30 @@
+1. Install maven 
+
+2. pull the latest build from the 'Gonzalo' branch on github.
+
+3. go to the root directory of the project (the 'risk-project' folder)
+	- use 'mvn -v' or 'mvn --version' in cmd to verify maven was succesfully installed
+	- you may have to set the corrects path variables for the java JRE/JDK if this or something else in the instructions doesn't work
+	- googling any errors that arise will show you what to do in more detail 
+
+4. compile, build, and run the project from the root directory (a 'target' folder will be created in the root of the project)
+	mvn compile
+	mvn package
+	java -cp target/risk-project-1.0-SNAPSHOT.jar Risk
+
+5. project must be recompiled and packaged after every new change or update that we make. first use:
+	mvn clean
+	- this will delete the 'target' folder and all of its files (this is a necessary step).
+	- repeat step 4 to compile, package, and run the updated version of the porject.
+
+
+
+risk-project\src\main\java\ARG should only contain the .java project files
+
+risk-project\src\test\java\ARG should only contain the .java test case files
+
+everything else goes in the project root directory (the 'risk-project' folder)
+
+Don't ask me why. All I know is that I was able to get the project to run via this method. 
+We should be able to continue development as long as we preserve this structure. 
+We should also be able to continue using git with the branch I made.
