@@ -1,5 +1,5 @@
 1. Install maven 
-
+	https://www.mkyong.com/maven/how-to-install-maven-in-windows/
 2. pull the latest build from the 'Gonzalo' branch on github.
 
 3. go to the root directory of the project (the 'risk-project' folder)
