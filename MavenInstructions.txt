@@ -5,6 +5,7 @@
 3. go to the root directory of the project (the 'risk-project' folder)
 	- use 'mvn -v' or 'mvn --version' in cmd to verify maven was succesfully installed
 	- you may have to set the corrects path variables for the java JRE/JDK if this or something else in the instructions doesn't work
+	  https://stackoverflow.com/questions/17432809/mvn-is-not-recognized-as-an-internal-or-external-command-operable-program-or
 	- googling any errors that arise will show you what to do in more detail 
 
 4. compile, build, and run the project from the root directory (a 'target' folder will be created in the root of the project)
