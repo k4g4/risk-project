@@ -1,0 +1,127 @@
+package com.arg.project;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Component;
+import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+public class Game implements Runnable {
+
+    public void run() {
+
+        final JFrame frame = new JFrame("Risk");
+        final Start startScreen = new Start();
+        frame.add(startScreen);
+        startScreen.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                int numPlayers = startScreen.selectPlayers(e);
+                if (numPlayers != -1) {
+                    startScreen.setVisible(false);
+                    startScreen.setEnabled(false);
+                    initializeGame(frame, numPlayers);
+                }
+            }
+
+        });
+
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setVisible(true);    
+
+    }
+
+    private static void initializeGame(JFrame frame, int numPlayers) {
+
+        final JPanel turnPanel = new JPanel();
+        final JLabel turnInfo = new JLabel();
+        //turnPanel.setPreferredSize(new Dimension(0, 50));
+        //turnInfo.setPreferredSize(new Dimension(0 , 0 ));
+        //turnPanel.setBackground(Color.red);
+        
+        turnPanel.add(turnInfo);
+
+        final JPanel statusPanel = new JPanel();
+        final JPanel cardPanel = new JPanel();
+        cardPanel.setPreferredSize(new Dimension(150, 210));
+        statusPanel.setPreferredSize(new Dimension(150,0 ));
+        //statusPanel.setBackground(Color.CYAN);
+       // cardPanel.setBackground(Color.blue);
+        
+        
+        final JLabel diceLabel = new JLabel(" Your Roll:    Enemy Roll:" );
+        //diceLabel.setBackground(Color.CYAN);
+        diceLabel.setPreferredSize(new Dimension(150, 40 ));
+        //diceLabel.setBackground(Color.CYAN);
+       
+        final JPanel spacer = new JPanel();
+        spacer.setPreferredSize(new Dimension(150, 80));
+        //spacer.setBackground(Color.CYAN);
+        
+        
+        final JLabel[] cardInfo = new JLabel[9];
+        for (int i = 0; i < cardInfo.length; i++) {
+            cardInfo[i] = new JLabel();
+            //cardInfo[i].setAlignmentX(Component.LEFT_ALIGNMENT);
+            cardPanel.add(cardInfo[i]);
+        }
+        
+        Dice diceInfo = new Dice();
+        //diceInfo.setBackground(Color.yellow);
+        diceInfo.setPreferredSize(new Dimension(150,180 ));
+
+        final Board board = new Board(turnInfo, cardInfo, diceInfo, numPlayers);
+        frame.add(board, BorderLayout.CENTER);
+
+        final JButton use = new JButton("Use");
+        use.setPreferredSize(new Dimension(150, 30));
+        use.setBackground(Color.PINK);
+
+        use.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                board.useCards();
+            }
+        });
+        
+        cardPanel.add(use);
+
+        
+        
+        final JButton next = new JButton("Next");
+        next.setPreferredSize(new Dimension(150, 50));
+        next.setBackground(Color.green);
+        next.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                board.next();
+            }
+        });
+        
+        //statusPanel.add(next,BorderLayout.SOUTH);
+        //statusPanel.add(cardPanel);
+        statusPanel.add(diceLabel);
+        statusPanel.add(diceInfo);
+        statusPanel.add(spacer);
+        statusPanel.add(cardPanel);
+        
+        statusPanel.add(next);
+        
+        frame.add(statusPanel, BorderLayout.EAST);
+        frame.add(turnPanel, BorderLayout.SOUTH);
+
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setVisible(true);   
+
+    }
+
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Game());
+    }
+
+}

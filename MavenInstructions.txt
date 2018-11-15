@@ -11,7 +11,8 @@
 4. compile, build, and run the project from the root directory (a 'target' folder will be created in the root of the project)
 	mvn compile
 	mvn package
-	java -cp target/risk-project-1.0-SNAPSHOT.jar Risk
+	java -cp target/risk-project-1.0-SNAPSHOT.jar Game        (or)
+	java -cp target/risk-project-1.0-SNAPSHOT.jar com.arg.project.Game
 
 5. project must be recompiled and packaged after every new change or update that we make. first use:
 	mvn clean
