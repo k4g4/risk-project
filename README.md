@@ -1,0 +1,2 @@
+# risk-project
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/21c748e3ef9b463390d844a83fdfc7da)](https://app.codacy.com/app/Ryan10101996/risk-project?utm_source=github.com&utm_medium=referral&utm_content=Zgonz19/risk-project&utm_campaign=Badge_Grade_Dashboard)
