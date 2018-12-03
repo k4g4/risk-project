@@ -26,49 +26,16 @@ public class AmazonS3Example {
 		AmazonS3 s3client = new AmazonS3Client(credentials);
 		// create a bucket
 		String bucketName = "riskproject-arg";
-		s3client.createBucket(bucketName);
+		//s3client.createBucket(bucketName);
 
 		String folderName = "riskgamelogs";
-		createFolder(bucketName, folderName, s3client);
+		//createFolder(bucketName, folderName, s3client);
 		//System.out.println("dfasjklaskl;");
 
 		String fileName = folderName + SUFFIX + timeanddate+"_risklog.txt";
 		s3client.putObject(new PutObjectRequest(bucketName, fileName, new File(timeanddate + "_risklog.txt")).withCannedAcl(CannedAccessControlList.PublicRead));
 	}
-	/*
-	public static void main(String[] args) 
-	{
-		// credentials object identifying user for authentication
-		// user must have AWSConnector and AmazonS3FullAccess for 
-		// this example to work
-		AWSCredentials credentials = new BasicAWSCredentials("AKIAJ673ISJSSODR5YSA", "Qwqrr+snPe3PO2n9pAanGxoxLzCh3ElyVFztBErR");
-		
-		// create a client connection based on credentials
-		AmazonS3 s3client = new AmazonS3Client(credentials);
-		
-		// create bucket - name must be unique for all S3 users
-		String bucketName = "javatutorial-net-example-bucket";
-		s3client.createBucket(bucketName);
-		
-		// list buckets
-		for (Bucket bucket : s3client.listBuckets()) {
-			System.out.println(" - " + bucket.getName());
-		}
-		
-		// create folder into bucket
-		String folderName = "testfolder";
-		createFolder(bucketName, folderName, s3client);
-		
-		// upload file to folder and set it to public
-		String fileName = folderName + SUFFIX + "mapbackground.png";
-		s3client.putObject(new PutObjectRequest(bucketName, fileName, new File("mapbackground.png")).withCannedAcl(CannedAccessControlList.PublicRead));
-		
-		deleteFolder(bucketName, folderName, s3client);
-		
-		// deletes bucket
-		s3client.deleteBucket(bucketName);
-	}
-	*/
+
 	
 	public static void createFolder(String bucketName, String folderName, AmazonS3 client) 
 	{
