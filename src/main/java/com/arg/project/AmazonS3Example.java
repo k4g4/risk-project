@@ -24,7 +24,7 @@ public class AmazonS3Example {
 		String timeanddate = timestamp;
 		AWSCredentials credentials = new BasicAWSCredentials("AKIAJ673ISJSSODR5YSA", "Qwqrr+snPe3PO2n9pAanGxoxLzCh3ElyVFztBErR");
 		AmazonS3 s3client = new AmazonS3Client(credentials);
-		// create a bucket
+		
 		String bucketName = "riskproject-arg";
 		//s3client.createBucket(bucketName);
 
