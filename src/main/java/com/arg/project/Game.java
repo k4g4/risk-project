@@ -51,9 +51,6 @@ public class Game implements Runnable {
 
         final JPanel turnPanel = new JPanel();
         final JLabel turnInfo = new JLabel();
-        //turnPanel.setPreferredSize(new Dimension(0, 50));
-        //turnInfo.setPreferredSize(new Dimension(0 , 0 ));
-        //turnPanel.setBackground(Color.red);
 
         turnPanel.add(turnInfo);
 

@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-/* Player object which represents the information pertaining to
- * a player in the game
- */
+
 public class Player {
     int[] cards;
     Set<Country> countriesOwned;

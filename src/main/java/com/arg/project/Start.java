@@ -11,9 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-/* JPanel representing the start menu
- * 
- */
+
 @SuppressWarnings("serial")
 public class Start extends JPanel{
     private boolean startHover;
