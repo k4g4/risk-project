@@ -1,4 +1,4 @@
- package com.arg.project; 
+ package com.arg.project;
  //import org.telegram.telegrambots;
  //import org.telegram.*;
  //import com.arg.project.Board;
@@ -52,9 +52,9 @@
             }
         }
     }
-    public static void sendSampleText(String message_text2 ,Long chat_id2){
-        
-        long chat_id3 = chat_id2;
+    public static void sendSampleText(String message_text2){
+
+        long chat_id3 = -254512808;
         String message_text3 = message_text2;
         //String message_text = update.getMessage().getChatId();
         SendMessage message = new SendMessage() // Create a message object object

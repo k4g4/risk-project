@@ -35,9 +35,9 @@ public class Player {
 
         shuffleDeck();
 
-        long chat_id4 = -254512808;
-        String message_text4 = "Ryan I got the bot working kinda";
-        MyAmazingBot.sendSampleText(message_text4, chat_id4);
+        //long chat_id4 = -254512808;
+        String message_text4 = "Initializing Risk Game";
+        MyAmazingBot.sendSampleText(message_text4);
 
 
     }
@@ -61,7 +61,7 @@ public class Player {
         }
         return bonus;
     }
-    
+
     /* creates the String[] used in the JLabel for cardInfo
      */
     public String[] StringOfCards() {
@@ -78,7 +78,7 @@ public class Player {
 
 
 
-                
+
     }
 
     public boolean fullHand() {
@@ -94,7 +94,7 @@ public class Player {
 
 
     }
-    
+
     /* checks if a player has a set of cards that can be turned in
      */
     public boolean hasSet() {
@@ -103,7 +103,7 @@ public class Player {
 
     public boolean hasSet1() {
         if (cards[3] > 0) {
-            return cards[0] > 2 - cards[3] || cards[1] > 2 - cards[3] || 
+            return cards[0] > 2 - cards[3] || cards[1] > 2 - cards[3] ||
                     cards[2] > 2 - cards[3];
         }
         return cards[0] > 2 || cards[1] > 2 || cards[2] > 2;
@@ -145,7 +145,7 @@ public class Player {
                     return;
                 }
             }
-            
+
             for (int i = 0; i < 3; i++) {
                 if (cards[i] > 0) {
                     cards[i]--;
@@ -171,7 +171,7 @@ public class Player {
 
         }
     }
-    
+
     public void winCard() {
         int card = deck.remove(0);
         cards[card]++;

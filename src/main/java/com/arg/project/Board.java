@@ -1,5 +1,6 @@
 package com.arg.project;
 import com.arg.project.MyAmazingBot;
+import com.arg.project.AmazonS3Example;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import java.awt.Color;
 import twitter4j.Status;
@@ -30,39 +31,67 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 import java.util.Timer;
 import java.util.TimerTask;
- import org.telegram.telegrambots.*;
+import org.telegram.telegrambots.*;
  //import org.telegram.telegrambots.api.methods.send.SendMessage;
 // import org.telegram.telegrambots.api.objects.Update;
- import org.telegram.telegrambots.bots.TelegramLongPollingBot;
- import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
  //import org.telegram.telegrambots.meta.api.objects.Update;
 // import org.telegram.telegrambots.exceptions.TelegramApiException;
- import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.SdkClientException;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CompleteMultipartUploadRequest;
+import com.amazonaws.services.s3.model.InitiateMultipartUploadRequest;
+import com.amazonaws.services.s3.model.InitiateMultipartUploadResult;
+import com.amazonaws.services.s3.model.PartETag;
+import com.amazonaws.services.s3.model.UploadPartRequest;
+import com.amazonaws.services.s3.model.UploadPartResult;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
+
 
 @SuppressWarnings("serial")
-public class Board extends JPanel{	
+public class Board extends JPanel{
 	static int currency = 0;
 	static int capturedTerritories = 0;
     private static List<Set<Country>> continents;
     private static final int[] continentBonuses = {5, 2, 5, 3, 7, 2};
-    
+
     static Country[] countries;
     public static final int BOARD_WIDTH = 1350;
     public static final int BOARD_HEIGHT = 900;
     //setBackground(new Color(1.0f,1.0f,1.0f,0.5f));
-    
-    
+
+    public static List<String> amazonlogtext = new ArrayList<String>();
     public static Color player1 = new Color(0.0f, 0.0f, 1.0f, 0.5f);
     public static Color player2 = new Color(1.0f, 0.0f, 0.0f, 0.5f);
     public static Color player3 = new Color(1.0f, 1.0f, 0.0f, 0.5f);
-    public static Color player4 = new Color(0.0f, 1.0f, 0.0f, 0.5f); 
+    public static Color player4 = new Color(0.0f, 1.0f, 0.0f, 0.5f);
     public static Color player5 = new Color(0.0f, 1.0f, 1.0f, 0.5f);
     public static Color player6 = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-    
+
     public static final Color[] colors = {player1, player2, player3, player4, player5, player6};
-    
+
     private static int turn = 0;
-    
+
     private static int troopsToPlace;
     private static Country selectedCountry;
     private static Country selectedSecondCountry;
@@ -72,8 +101,8 @@ public class Board extends JPanel{
     private static Player[] players;
 
     enum Mode {
-        UseCardMode, InitialPlacingMode, PlacingMode, AttackFromMode, AttackToMode, 
-        KeepAttackingMode, NewCountryMode, FortifyFromMode, FortifyToMode, 
+        UseCardMode, InitialPlacingMode, PlacingMode, AttackFromMode, AttackToMode,
+        KeepAttackingMode, NewCountryMode, FortifyFromMode, FortifyToMode,
         KeepFortifyingMode, GameOverMode;
     }
 
@@ -85,7 +114,7 @@ public class Board extends JPanel{
         this.cardInfo = cardInfo;
         this.diceInfo = diceInfo;
 
-        initializeCountries();   
+        initializeCountries();
         initializeContinents();
         initializePlayers(numPlayers);
         initialCountryOwners(numPlayers);
@@ -104,10 +133,10 @@ public class Board extends JPanel{
                 switch (mode) {
                 case UseCardMode:
                     break;
-                case InitialPlacingMode: 
+                case InitialPlacingMode:
                     placeSoldier(mouse);
                     break;
-                case PlacingMode: 
+                case PlacingMode:
                     placeSoldier(mouse);
                     break;
                 case AttackFromMode:
@@ -121,7 +150,7 @@ public class Board extends JPanel{
                     break;
                 case NewCountryMode:
                     placeSoldierNewCountry(mouse);
-                    break;   
+                    break;
                 case FortifyFromMode:
                     selectOwnerCountry(mouse);
                     break;
@@ -468,11 +497,11 @@ public class Board extends JPanel{
         timer.cancel();
         timer = new Timer();
         timer.schedule(timerTask,30000);
-       
+
 
     }
-   
-    
+
+
     private void initialCountryOwners(int numPlayers) {
         int playerID = 0;
         Country[] shuffledCountries = shuffleCountries();
@@ -482,8 +511,8 @@ public class Board extends JPanel{
         }
         launchSomeTimer();
     }
-    
-    
+
+
 
     /* draws the connecting lines for countries that are adjacent
      * but not visibly so
@@ -491,7 +520,7 @@ public class Board extends JPanel{
     private void drawLines(Graphics g) {
         java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
         g2.setStroke(new java.awt.BasicStroke(5));
-    
+
     }
 
     /* ends the game if only one player is remaining
@@ -516,7 +545,10 @@ public class Board extends JPanel{
         		twitter.setOAuthAccessToken(accessToken);
         		try {
         			Status status = twitter.updateStatus("Player " + i +  " captured " + totalCaptured[i-1] + " territories total.") ;
-        		} catch (TwitterException e) {
+              //String faketext = "testing";
+              String texttotelegram = "Player " + i +  " captured " + totalCaptured[i-1] + " territories total.";
+              MyAmazingBot.sendSampleText(texttotelegram);
+            } catch (TwitterException e) {
         			// TODO Auto-generated catch block
         			e.printStackTrace();
         		}
@@ -528,13 +560,13 @@ public class Board extends JPanel{
      * moves on to next mode after all soldiers have been placed
      * @param: mouse for the mouse click location
      */
-    
 
-  
-    
+
+
+
     private void placeSoldier(Point mouse) {
     	resetSomeTimer();
-    	
+
 
         for (Country c : players[turn].countriesOwned) {
             if (c.inBounds(mouse)) {
@@ -548,7 +580,7 @@ public class Board extends JPanel{
                 if (turn == players.length) {
                     turn = 0;
                     updateTroopsToPlace();
-                    nextMode();  
+                    nextMode();
                 } else {
                     initialTroopsToPlace();
                 }
@@ -566,7 +598,7 @@ public class Board extends JPanel{
         troopsToPlace = 40 - countriesOwned - (players.length - 2) * 5;
     }
     /* return true if current player owns the continent, false otherwise
-     * @param continent index for continent 
+     * @param continent index for continent
      */
     private static boolean continentOwned(int continent) {
         for (Country c : continents.get(continent)) {
@@ -577,7 +609,7 @@ public class Board extends JPanel{
         return true;
     }
 
-    /* calculates the number of troops a player can place at 
+    /* calculates the number of troops a player can place at
      * the beginning of his/her turn
      */
     private static void updateTroopsToPlace() {
@@ -628,7 +660,7 @@ public class Board extends JPanel{
             }
         }
     }
-    
+
     /* sorts an array using insertion sort
      */
     private void insertSort(int[] arr) {
@@ -642,7 +674,7 @@ public class Board extends JPanel{
             }
         }
     }
-    
+
     /* returns a random int from 1-6
      */
     private int roll() {
@@ -654,22 +686,24 @@ public class Board extends JPanel{
      * @param own for the attacking country
      * @param enemy for the defending country
      */
+     Country acountry;
     private void attack(Country own, Country enemy) {
     	resetSomeTimer();
         int[] atkDice = new int[3];
         int[] defDice = new int[2];
-        
+        acountry = own;
+
         for (int i = 0; i < Math.min(atkDice.length, own.numSoldiers - 1); i++) {
             atkDice[i] = roll();
         }
-        
+
         for (int i = 0; i < Math.min(defDice.length, enemy.numSoldiers); i++) {
             defDice[i] = roll();
         }
-        
+
         insertSort(atkDice);
         insertSort(defDice);
-        
+
         if (atkDice[0] > defDice[0]) {
             enemy.numSoldiers--;
         } else {
@@ -682,7 +716,7 @@ public class Board extends JPanel{
                 own.numSoldiers--;
             }
         }
-        
+
         diceInfo.dice[0].update(atkDice[0]);
         diceInfo.dice[1].update(defDice[0]);
         diceInfo.dice[2].update(atkDice[1]);
@@ -710,10 +744,10 @@ public class Board extends JPanel{
             conquer();
         }
     }
-    
+
     private void keepAttacking(Point mouse) {
     	resetSomeTimer();
-        
+
         // unselect the country to attack from
         if (selectedCountry.inBounds(mouse)) {
             selectedCountry = null;
@@ -721,12 +755,12 @@ public class Board extends JPanel{
             mode = Mode.AttackFromMode;
             return;
         }
-        
+
         if (selectedSecondCountry.inBounds(mouse)) {
             attack(selectedCountry, selectedSecondCountry);
             checkOutcome();
         }
-        
+
     }
 
     /* takes all the troops remaining after a conquest and allow them to be placed
@@ -761,8 +795,8 @@ public class Board extends JPanel{
             selectedSecondCountry = null;
             nextMode();
         }
-        
-        
+
+
         if(turn==0)
             JOptionPane.showMessageDialog(null,
             	    "Player 2, you are being attacked.");
@@ -771,7 +805,7 @@ public class Board extends JPanel{
                	    "Player 1, you are being attacked.");
     }
 
-    /* place a soldier in a newly conquered country 
+    /* place a soldier in a newly conquered country
      * if there are no more soldiers, move on to the next mode
      * @param mouse for the mouse click location
      */
@@ -811,7 +845,7 @@ public class Board extends JPanel{
                 fortify();
                 nextMode();
             }
-        } 
+        }
     }
 
     /* fortifies a soldier from one country to another
@@ -832,45 +866,218 @@ public class Board extends JPanel{
      * on the game state
      */
     public String getStringForMode() {
+
         String init = "Player " + (turn + 1) + ": ";
+        //String asdf1 = init = "Player " + (turn + 1) + ": ";
+        //amazonlogtext.add(asdf1);
         switch(mode) {
         case UseCardMode:
             if (players[turn].fullHand()) {
+                String asdf2 = init + "You have a full hand. You must use a set.";
+                amazonlogtext.add(asdf2);
                 return init + "You have a full hand. You must use a set.";
             }
+            String asdf3 = init + "Would you like to use your cards?";
+            amazonlogtext.add(asdf3);
             return init + "Would you like to use your cards?";
         case InitialPlacingMode:
+            String asdf4 = init + "Welcome to Risk! Place troops: " + troopsToPlace + " remaining";
+            amazonlogtext.add(asdf4);
+            //System.out.print
             return init + "Welcome to Risk! Place troops: " + troopsToPlace + " remaining";
         case PlacingMode:
+            String asdf5 = init + "Place troops: " + troopsToPlace + " remaining";
+            amazonlogtext.add(asdf5);
             return init + "Place troops: " + troopsToPlace + " remaining";
         case AttackFromMode:
+            String asdf6 = init + "Choose country to attack from: ___ -> ___";
+            amazonlogtext.add(asdf6);
             return init + "Choose country to attack from: ___ -> ___";
         case AttackToMode:
+            String asdf7 = init + "Choose country to attack: " + selectedCountry.getName() + " -> ___";
+            amazonlogtext.add(asdf7);
             return init + "Choose country to attack: " + selectedCountry.getName() + " -> ___";
         case KeepAttackingMode:
-            return init + "Keep Attacking? " + selectedCountry.getName() + 
+            String asdf8 = init + "Keep Attacking? " + selectedCountry.getName() +
+                    " -> " + selectedSecondCountry.getName();
+            amazonlogtext.add(asdf8);
+            return init + "Keep Attacking? " + selectedCountry.getName() +
                     " -> " + selectedSecondCountry.getName();
         case NewCountryMode:
-            return init + "You successfully conquered " + selectedSecondCountry.getName() + 
+            String asdf9 = init + "You successfully conquered " + selectedSecondCountry.getName() +
+                    "! Add troops to your new or old country: " + troopsToPlace + " remaining";
+            amazonlogtext.add(asdf9);
+            return init + "You successfully conquered " + selectedSecondCountry.getName() +
                     "! Add troops to your new or old country: " + troopsToPlace + " remaining";
         case FortifyFromMode:
+            String asdf10 = init + "Choose country to fortify from: ___ -> ___";
+            amazonlogtext.add(asdf10);
             return init + "Choose country to fortify from: ___ -> ___";
         case FortifyToMode:
+            String asdf11 = init + "Choose country to fortify: " + selectedCountry.getName() + " -> ___";
+            amazonlogtext.add(asdf11);
             return init + "Choose country to fortify: " + selectedCountry.getName() + " -> ___";
         case KeepFortifyingMode:
+            String asdf12 = init + "Continue to fortify " + selectedCountry.getName() + " -> " +
+            selectedSecondCountry.getName() + "?";
+            amazonlogtext.add(asdf12);
             return init + "Continue to fortify " + selectedCountry.getName() + " -> " +
             selectedSecondCountry.getName() + "?";
         case GameOverMode:
+            String asdf13 = init + "You won!!!";
+            amazonlogtext.add(asdf13);
             return init + "You won!!!";
         default:
             return "did you just break this game why";
         }
     }
-    
+
     /* Allows the player to move on to the next phase of the game
      * This function is used by the Next button
      */
-    public void next() {
+
+
+    public void save(){
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+        try{
+            // Create new file
+            //String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+            //String a = current date;
+            //String content = "This is the content to write into create file";
+            String path = timeStamp + "_risklog.txt";
+            File file = new File(path);
+
+            // If file doesn't exists, then create it
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            // Write in file
+            //bw.write(content);
+            //bw.write(out,amazonlogtext,Charset.defaultCharset());
+
+            int listsize = amazonlogtext.size(); 
+            for (int a = 0; a < listsize; a++) {
+            //a.amazonlogtext.add(asdf10); 
+            //bw.write("/n") 
+            String sample = amazonlogtext.get(a) + "\r\n";
+            bw.write(sample);
+            //bw.write("\n"); 
+
+            }
+
+            // Close connection
+            bw.close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        System.out.println(amazonlogtext);
+        AmazonS3Example.amazonConnect(timeStamp);
+        System.out.println("Game log saved");
+
+         /*
+        String clientRegion = "us-east-2"; //String clientRegion = "*** Client region ***";
+        String bucketName = "risk-project"; //String bucketName = "*** Bucket name ***";
+        String keyName = "AKIAJ673ISJSSODR5YSA";  //String keyName = "*** Key name ***"; AKIAJ673ISJSSODR5YSA AKIAIYPP5T2RBC4HDICA
+        String filePath = "risklog.txt";
+        
+        File file = new File(filePath);
+        long contentLength = file.length();
+        long partSize = 5 * 1024 * 1024; // Set part size to 5 MB. 
+
+        try {
+            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                                    .withRegion(clientRegion)
+                                    .withCredentials(new ProfileCredentialsProvider())
+                                    .build();
+                       
+            // Create a list of ETag objects. You retrieve ETags for each object part uploaded,
+            // then, after each individual part has been uploaded, pass the list of ETags to 
+            // the request to complete the upload.
+            List<PartETag> partETags = new ArrayList<PartETag>();
+
+            // Initiate the multipart upload.
+            InitiateMultipartUploadRequest initRequest = new InitiateMultipartUploadRequest(bucketName, keyName);
+            InitiateMultipartUploadResult initResponse = s3Client.initiateMultipartUpload(initRequest);
+
+            // Upload the file parts.
+            long filePosition = 0;
+            for (int i = 1; filePosition < contentLength; i++) {
+                // Because the last part could be less than 5 MB, adjust the part size as needed.
+                partSize = Math.min(partSize, (contentLength - filePosition));
+
+                // Create the request to upload a part.
+                UploadPartRequest uploadRequest = new UploadPartRequest()
+                        .withBucketName(bucketName)
+                        .withKey(keyName)
+                        .withUploadId(initResponse.getUploadId())
+                        .withPartNumber(i)
+                        .withFileOffset(filePosition)
+                        .withFile(file)
+                        .withPartSize(partSize);
+
+                // Upload the part and add the response's ETag to our list.
+                UploadPartResult uploadResult = s3Client.uploadPart(uploadRequest);
+                partETags.add(uploadResult.getPartETag());
+
+                filePosition += partSize;
+            }
+
+            // Complete the multipart upload.
+            CompleteMultipartUploadRequest compRequest = new CompleteMultipartUploadRequest(bucketName, keyName,
+                    initResponse.getUploadId(), partETags);
+            s3Client.completeMultipartUpload(compRequest);
+        }
+        catch(AmazonServiceException e) {
+            // The call was transmitted successfully, but Amazon S3 couldn't process 
+            // it, so it returned an error response.
+            e.printStackTrace();
+        }
+        catch(SdkClientException e) {
+            // Amazon S3 couldn't be contacted for a response, or the client
+            // couldn't parse the response from Amazon S3.
+            e.printStackTrace();
+        }        
+
+
+
+            
+        try {
+            //Whatever the file path is.
+            File statText = new File("statsTest.txt");
+            FileOutputStream is = new FileOutputStream(statText);
+            OutputStreamWriter osw = new OutputStreamWriter(is);    
+            Writer w = new BufferedWriter(osw);
+            w.write("POTATO!!!");
+            w.close();
+        } catch (IOException e) {
+            System.err.println("Problem writing to the file statsTest.txt");
+        } 
+        */
+
+    }
+    public void undo(){
+
+
+
+
+
+      acountry.numSoldiers++;
+      players[turn].cards[4]=players[turn].cards[4]-1;
+
+      System.out.println("did the undo button register");
+
+    }
+    public void next()
+    { 
+
+
+
+    
 
 
         System.out.println("playercommandboardjava");
@@ -922,7 +1129,7 @@ public class Board extends JPanel{
             nextPlayer();
             break;
         case GameOverMode:
-            break;    
+            break;
         }
         setCardLabels();
         turnInfo.setText(getStringForMode());
@@ -944,8 +1151,11 @@ public class Board extends JPanel{
 		AccessToken accessToken = new AccessToken("1058188356302057473-jRNLejEhgWpWmGbj4Ux6kde1PsxdqK","YEp6sBeLAc5z1zID7mg8aSXX8xhE9vd36iV1GXcimPpXo");
 		twitter.setOAuthAccessToken(accessToken);
 		try {
+
 			Status status = twitter.updateStatus("Player " + (turn + 1) + " captured " + capturedTerritories + " territories this turn.") ;
-		} catch (TwitterException e) {
+      String sendingaction ="Player " + (turn + 1) + " captured " + capturedTerritories + " territories this turn." ;
+      MyAmazingBot.sendSampleText(sendingaction);
+    } catch (TwitterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -959,7 +1169,7 @@ public class Board extends JPanel{
             mode = Mode.PlacingMode;
         }
         updateTroopsToPlace();
-        
+
         capturedTerritories=0;
         players[turn].cards[4] = players[turn].cards[4]+1;
     }
@@ -1043,7 +1253,7 @@ public class Board extends JPanel{
     public void setCardLabels() {
         String[] cardLabels = players[turn].StringOfCards();
         for (int i = 0; i < cardLabels.length; i++) {
-            cardInfo[i].setText(cardLabels[i]);    
+            cardInfo[i].setText(cardLabels[i]);
         }
     }
 
@@ -1071,7 +1281,7 @@ public class Board extends JPanel{
                 } else {
                     c.unhighlight();
                 }
-                c.draw(g);   
+                c.draw(g);
             }
         }
         drawLines(g);

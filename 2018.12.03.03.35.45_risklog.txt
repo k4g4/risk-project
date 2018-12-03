@@ -1,0 +1,72 @@
+Player 1: Welcome to Risk! Place troops: 19 remaining
+Player 1: Welcome to Risk! Place troops: 18 remaining
+Player 1: Welcome to Risk! Place troops: 17 remaining
+Player 1: Welcome to Risk! Place troops: 16 remaining
+Player 1: Welcome to Risk! Place troops: 15 remaining
+Player 1: Welcome to Risk! Place troops: 14 remaining
+Player 1: Welcome to Risk! Place troops: 13 remaining
+Player 1: Welcome to Risk! Place troops: 12 remaining
+Player 1: Welcome to Risk! Place troops: 11 remaining
+Player 1: Welcome to Risk! Place troops: 10 remaining
+Player 1: Welcome to Risk! Place troops: 10 remaining
+Player 1: Welcome to Risk! Place troops: 10 remaining
+Player 1: Welcome to Risk! Place troops: 9 remaining
+Player 1: Welcome to Risk! Place troops: 8 remaining
+Player 1: Welcome to Risk! Place troops: 7 remaining
+Player 1: Welcome to Risk! Place troops: 7 remaining
+Player 1: Welcome to Risk! Place troops: 7 remaining
+Player 1: Welcome to Risk! Place troops: 6 remaining
+Player 1: Welcome to Risk! Place troops: 5 remaining
+Player 1: Welcome to Risk! Place troops: 4 remaining
+Player 1: Welcome to Risk! Place troops: 3 remaining
+Player 1: Welcome to Risk! Place troops: 2 remaining
+Player 1: Welcome to Risk! Place troops: 1 remaining
+Player 2: Welcome to Risk! Place troops: 19 remaining
+Player 2: Welcome to Risk! Place troops: 19 remaining
+Player 2: Welcome to Risk! Place troops: 19 remaining
+Player 2: Welcome to Risk! Place troops: 19 remaining
+Player 2: Welcome to Risk! Place troops: 19 remaining
+Player 2: Welcome to Risk! Place troops: 19 remaining
+Player 2: Welcome to Risk! Place troops: 19 remaining
+Player 2: Welcome to Risk! Place troops: 19 remaining
+Player 2: Welcome to Risk! Place troops: 19 remaining
+Player 2: Welcome to Risk! Place troops: 19 remaining
+Player 2: Welcome to Risk! Place troops: 19 remaining
+Player 2: Welcome to Risk! Place troops: 18 remaining
+Player 2: Welcome to Risk! Place troops: 17 remaining
+Player 2: Welcome to Risk! Place troops: 16 remaining
+Player 2: Welcome to Risk! Place troops: 15 remaining
+Player 2: Welcome to Risk! Place troops: 14 remaining
+Player 2: Welcome to Risk! Place troops: 13 remaining
+Player 2: Welcome to Risk! Place troops: 12 remaining
+Player 2: Welcome to Risk! Place troops: 11 remaining
+Player 2: Welcome to Risk! Place troops: 10 remaining
+Player 2: Welcome to Risk! Place troops: 9 remaining
+Player 2: Welcome to Risk! Place troops: 8 remaining
+Player 2: Welcome to Risk! Place troops: 7 remaining
+Player 2: Welcome to Risk! Place troops: 6 remaining
+Player 2: Welcome to Risk! Place troops: 5 remaining
+Player 2: Welcome to Risk! Place troops: 4 remaining
+Player 2: Welcome to Risk! Place troops: 3 remaining
+Player 2: Welcome to Risk! Place troops: 2 remaining
+Player 2: Welcome to Risk! Place troops: 1 remaining
+Player 1: Place troops: 7 remaining
+Player 1: Place troops: 7 remaining
+Player 1: Place troops: 6 remaining
+Player 1: Place troops: 5 remaining
+Player 1: Place troops: 4 remaining
+Player 1: Place troops: 3 remaining
+Player 1: Place troops: 2 remaining
+Player 1: Place troops: 1 remaining
+Player 1: Choose country to attack from: ___ -> ___
+Player 1: Choose country to attack: India -> ___
+Player 1: Keep Attacking? India -> Middle East
+Player 1: Keep Attacking? India -> Middle East
+Player 1: You successfully conquered Middle East! Add troops to your new or old country: 4 remaining
+Player 1: You successfully conquered Middle East! Add troops to your new or old country: 4 remaining
+Player 1: You successfully conquered Middle East! Add troops to your new or old country: 4 remaining
+Player 1: You successfully conquered Middle East! Add troops to your new or old country: 4 remaining
+Player 1: You successfully conquered Middle East! Add troops to your new or old country: 4 remaining
+Player 1: You successfully conquered Middle East! Add troops to your new or old country: 4 remaining
+Player 1: You successfully conquered Middle East! Add troops to your new or old country: 4 remaining
+Player 1: You successfully conquered Middle East! Add troops to your new or old country: 4 remaining

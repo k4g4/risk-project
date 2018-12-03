@@ -1,4 +1,5 @@
 package com.arg.project;
+import com.arg.project.AmazonS3Example;
 //import com.arg.projec.Dice;
 //package org.telegram.telegrambots;
 //import org.telegram.telegrambots.bots;
@@ -12,7 +13,7 @@ import java.awt.Component;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import org.telegram.*;
+//import org.telegram.*;
 import org.telegram.telegrambots.*;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -42,7 +43,7 @@ public class Game implements Runnable {
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setVisible(true);    
+        frame.setVisible(true);
 
     }
 
@@ -53,7 +54,7 @@ public class Game implements Runnable {
         //turnPanel.setPreferredSize(new Dimension(0, 50));
         //turnInfo.setPreferredSize(new Dimension(0 , 0 ));
         //turnPanel.setBackground(Color.red);
-        
+
         turnPanel.add(turnInfo);
 
         final JPanel statusPanel = new JPanel();
@@ -62,25 +63,25 @@ public class Game implements Runnable {
         statusPanel.setPreferredSize(new Dimension(150,0 ));
         //statusPanel.setBackground(Color.CYAN);
        // cardPanel.setBackground(Color.blue);
-        
-        
+
+
         final JLabel diceLabel = new JLabel(" Your Roll:    Enemy Roll:" );
         //diceLabel.setBackground(Color.CYAN);
         diceLabel.setPreferredSize(new Dimension(150, 40 ));
         //diceLabel.setBackground(Color.CYAN);
-       
+
         final JPanel spacer = new JPanel();
         spacer.setPreferredSize(new Dimension(150, 80));
         //spacer.setBackground(Color.CYAN);
-        
-        
+
+
         final JLabel[] cardInfo = new JLabel[9];
         for (int i = 0; i < cardInfo.length; i++) {
             cardInfo[i] = new JLabel();
             //cardInfo[i].setAlignmentX(Component.LEFT_ALIGNMENT);
             cardPanel.add(cardInfo[i]);
         }
-        
+        // hey
         Dice diceInfo = new Dice();
         //diceInfo.setBackground(Color.yellow);
         diceInfo.setPreferredSize(new Dimension(150,180 ));
@@ -97,11 +98,11 @@ public class Game implements Runnable {
                 board.useCards();
             }
         });
-        
+
         cardPanel.add(use);
 
-        
-        
+
+
         final JButton next = new JButton("Next");
         next.setPreferredSize(new Dimension(150, 50));
         next.setBackground(Color.green);
@@ -110,23 +111,45 @@ public class Game implements Runnable {
                 board.next();
             }
         });
-        
+
+        final JButton undo = new JButton("Undo");
+        undo.setPreferredSize(new Dimension(150, 50));
+        undo.setBackground(Color.yellow);
+        undo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                board.undo();
+            }
+        });
+
+        final JButton save = new JButton("Save AWS");
+        save.setPreferredSize(new Dimension(150, 50));
+        save.setBackground(Color.orange);
+        save.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                board.save();
+            }
+        });
+
+
+
         //statusPanel.add(next,BorderLayout.SOUTH);
         //statusPanel.add(cardPanel);
         statusPanel.add(diceLabel);
         statusPanel.add(diceInfo);
         statusPanel.add(spacer);
         statusPanel.add(cardPanel);
-        
+
         statusPanel.add(next);
-        
+        statusPanel.add(undo);
+        statusPanel.add(save);
+
         frame.add(statusPanel, BorderLayout.EAST);
         frame.add(turnPanel, BorderLayout.SOUTH);
 
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setVisible(true);   
+        frame.setVisible(true);
 
     }
 
@@ -144,7 +167,13 @@ public class Game implements Runnable {
             botsApi.registerBot(new MyAmazingBot());
         } catch (TelegramApiException e) {
             e.printStackTrace();
-        } 
+        }
+
+
+        //amazon stuff
+
+
+
     }
 
 }
