@@ -642,8 +642,7 @@ public class Board extends JPanel{
         }
     }
 
-    /* sorts an array using insertion sort
-     */
+    
     private void insertSort(int[] arr) {
         for (int i = 1; i < arr.length; i++) {
             for (int j = i; j > 0; j--) {
