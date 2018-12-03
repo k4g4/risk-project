@@ -10,8 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-/* JPanel displaying the five dice used in a battle
- */
+
 @SuppressWarnings("serial")
 public class Dice extends JPanel {
     
@@ -35,7 +34,7 @@ public class Dice extends JPanel {
         dice[2] = new Die(true);
         dice[3] = new Die(false);
         dice[4] = new Die(true);
-        //dice[5] = new Die(false);
+        
 
         for (int i = 0; i < dice.length; i++) {
             this.add(dice[i]);

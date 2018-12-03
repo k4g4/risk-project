@@ -11,9 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-/* JPanel representing the start menu
- * 
- */
+
 @SuppressWarnings("serial")
 public class Start extends JPanel{
     private boolean startHover;
@@ -119,10 +117,7 @@ public class Start extends JPanel{
         });
     }
         
-    /* Checks the position of the mouse to see what number of players
-     * the user has selected
-     * @param e the mouse click
-     */
+    
     public int selectPlayers(MouseEvent e) {
         Point mouse = e.getPoint();
         

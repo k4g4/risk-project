@@ -51,9 +51,6 @@ public class Game implements Runnable {
 
         final JPanel turnPanel = new JPanel();
         final JLabel turnInfo = new JLabel();
-        //turnPanel.setPreferredSize(new Dimension(0, 50));
-        //turnInfo.setPreferredSize(new Dimension(0 , 0 ));
-        //turnPanel.setBackground(Color.red);
 
         turnPanel.add(turnInfo);
 
@@ -61,9 +58,7 @@ public class Game implements Runnable {
         final JPanel cardPanel = new JPanel();
         cardPanel.setPreferredSize(new Dimension(150, 210));
         statusPanel.setPreferredSize(new Dimension(150,0 ));
-        //statusPanel.setBackground(Color.CYAN);
-       // cardPanel.setBackground(Color.blue);
-
+        
 
         final JLabel diceLabel = new JLabel(" Your Roll:    Enemy Roll:" );
         //diceLabel.setBackground(Color.CYAN);
