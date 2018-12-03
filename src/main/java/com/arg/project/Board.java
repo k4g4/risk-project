@@ -655,17 +655,12 @@ public class Board extends JPanel{
         }
     }
 
-    /* returns a random int from 1-6
-     */
+    
     private int roll() {
         return (int) Math.ceil(6 * Math.random());
     }
 
-    /* simulates the dice rolling for an attack
-     * number of dice is dependent on available soldiers
-     * @param own for the attacking country
-     * @param enemy for the defending country
-     */
+    
      Country acountry;
     private void attack(Country own, Country enemy) {
     	resetSomeTimer();
@@ -705,8 +700,7 @@ public class Board extends JPanel{
         diceInfo.repaint();
     }
 
-    /* checks the number of available soldiers to see if a battle is over
-     */
+    
     private void checkOutcome() {
         if (selectedCountry.numSoldiers == 1) {
             selectedCountry = null;
