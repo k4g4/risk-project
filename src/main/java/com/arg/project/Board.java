@@ -464,10 +464,7 @@ public class Board extends JPanel{
         return shuffledCountries;
     }
 
-    /* iterates through a shuffled array of countries to randomly
-     * assign owners to countries
-     * @param numPlayers the number of players
-     */
+   
     private static Timer timer;
     private void launchSomeTimer() {
         TimerTask timerTask = new TimerTask() {
