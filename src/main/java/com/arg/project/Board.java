@@ -620,13 +620,11 @@ public class Board extends JPanel{
         }
     }
 
-    /* selects a country and stores it given that the current player does not own it
-     * @param mouse for the mouse click location
-     */
+    
     private void selectEnemyCountry(Point mouse) {
     	resetSomeTimer();
 
-        // unselect the country to attack from
+        
         if (selectedCountry.inBounds(mouse)) {
             selectedCountry = null;
             mode = Mode.AttackFromMode;
