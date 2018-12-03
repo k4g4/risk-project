@@ -30,7 +30,7 @@ public class AmazonS3Example {
 
 		String folderName = "riskgamelogs";
 		//createFolder(bucketName, folderName, s3client);
-		//System.out.println("dfasjklaskl;");
+	
 
 		String fileName = folderName + SUFFIX + timeanddate+"_risklog.txt";
 		s3client.putObject(new PutObjectRequest(bucketName, fileName, new File(timeanddate + "_risklog.txt")).withCannedAcl(CannedAccessControlList.PublicRead));
