@@ -510,17 +510,14 @@ public class Board extends JPanel{
 
 
 
-    /* draws the connecting lines for countries that are adjacent
-     * but not visibly so
-     */
+   
     private void drawLines(Graphics g) {
         java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
         g2.setStroke(new java.awt.BasicStroke(5));
 
     }
 
-    /* ends the game if only one player is remaining
-     */
+    
     private void checkWin() {
         int numDead = 0;
         for (Player p : players) {
@@ -545,7 +542,7 @@ public class Board extends JPanel{
               String texttotelegram = "Player " + i +  " captured " + totalCaptured[i-1] + " territories total.";
               MyAmazingBot.sendSampleText(texttotelegram);
             } catch (TwitterException e) {
-        			// TODO Auto-generated catch block
+        			
         			e.printStackTrace();
         		}
         	}
