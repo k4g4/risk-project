@@ -117,10 +117,7 @@ public class Start extends JPanel{
         });
     }
         
-    /* Checks the position of the mouse to see what number of players
-     * the user has selected
-     * @param e the mouse click
-     */
+    
     public int selectPlayers(MouseEvent e) {
         Point mouse = e.getPoint();
         
