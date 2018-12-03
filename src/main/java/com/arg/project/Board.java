@@ -830,19 +830,23 @@ public class Board extends JPanel{
      * if there are no more soldiers, move on to the next mode
      * @param mouse for the mouse click location
      */
-    private void placeSoldierNewCountry(Point mouse) {
+    private void placeSoldierNewCountry(Point mouse) 
+    {
     	resetSomeTimer();
 
-        if (selectedCountry.inBounds(mouse)) {
+        if (selectedCountry.inBounds(mouse)) 
+        {
             troopsToPlace--;
             selectedCountry.numSoldiers++;
         }
-        if (selectedSecondCountry.inBounds(mouse)) {
+        if (selectedSecondCountry.inBounds(mouse)) 
+        {
             troopsToPlace--;
             selectedSecondCountry.numSoldiers++;
         }
 
-        if (troopsToPlace == 0) {
+        if (troopsToPlace == 0) 
+        {
             selectedCountry = null;
             selectedSecondCountry = null;
             nextMode();
@@ -852,16 +856,20 @@ public class Board extends JPanel{
     /* fortifies a soldier from one country to another given that they are adjacent
      * @param mouse for the mouse click location
      */
-    private void selectFortify(Point mouse) {
+    private void selectFortify(Point mouse) 
+    {
     	resetSomeTimer();
-        if (selectedCountry.inBounds(mouse)) {
+        if (selectedCountry.inBounds(mouse)) 
+        {
             selectedCountry = null;
             mode = Mode.FortifyFromMode;
             return;
         }
 
-        for (Country c : selectedCountry.adjacentCountries) {
-            if (c.inBounds(mouse) && players[turn].countriesOwned.contains(c)) {
+        for (Country c : selectedCountry.adjacentCountries) 
+        {
+            if (c.inBounds(mouse) && players[turn].countriesOwned.contains(c)) 
+            {
                 selectedSecondCountry = c;
                 fortify();
                 nextMode();
@@ -872,13 +880,15 @@ public class Board extends JPanel{
     /* fortifies a soldier from one country to another
      * if there are no more soldiers available, move on to next mode
      */
-    private void fortify() {
+    private void fortify() 
+    {
     	resetSomeTimer();
         selectedCountry.numSoldiers--;
         selectedSecondCountry.numSoldiers++;
 
         // immediately switch to next mode if no longer possible to fortify
-        if (selectedCountry.numSoldiers == 1) {
+        if (selectedCountry.numSoldiers == 1) 
+        {
             nextMode();
         }
     }
@@ -953,9 +963,8 @@ public class Board extends JPanel{
         }
     }
 
- 
-
-    public void save(){
+    public void save()
+    {
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         try{
 
@@ -987,10 +996,6 @@ public class Board extends JPanel{
         System.out.println(amazonlogtext);
         AmazonS3Example.amazonConnect(timeStamp);
         System.out.println("Game log saved");
-
-         /*
-
-        */
 
     }
 
@@ -1202,7 +1207,7 @@ public class Board extends JPanel{
         g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
         Image picture = Toolkit.getDefaultToolkit().getImage("mapbackground.PNG");
         g.drawImage(picture, 10, 10, this);
-        
+
         for (int i = 0; i < players.length; i++) {
             Player player = players[i];
             for(Country c : player.countriesOwned) {
