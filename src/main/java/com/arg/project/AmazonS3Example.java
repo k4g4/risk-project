@@ -15,8 +15,6 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 public class AmazonS3Example {
 	
 	private static final String SUFFIX = "/";
-	
-
 
 	public static void amazonConnect(String timestamp)
 	{
@@ -31,12 +29,10 @@ public class AmazonS3Example {
 		String folderName = "riskgamelogs";
 		//createFolder(bucketName, folderName, s3client);
 	
-
 		String fileName = folderName + SUFFIX + timeanddate+"_risklog.txt";
 		s3client.putObject(new PutObjectRequest(bucketName, fileName, new File(timeanddate + "_risklog.txt")).withCannedAcl(CannedAccessControlList.PublicRead));
 	}
 
-	
 	public static void createFolder(String bucketName, String folderName, AmazonS3 client) 
 	{
 		// create meta-data for your folder and set content-length to 0
