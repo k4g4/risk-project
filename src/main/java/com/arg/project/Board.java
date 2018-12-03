@@ -63,7 +63,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
-
 @SuppressWarnings("serial")
 public class Board extends JPanel{
 	static int currency = 0;
@@ -118,7 +117,6 @@ public class Board extends JPanel{
         initialTroopsToPlace();
         setBackground(Color.black);
         setCardLabels();
-
 
         turnInfo.setText(getStringForMode());
 
@@ -186,7 +184,6 @@ public class Board extends JPanel{
         numbPlayers = numPlayers;
     }
 
-
     /* creates the ArrayList of Set<Country> that represents continents
      * necessary for checking continent bonuses
      */
@@ -234,7 +231,6 @@ public class Board extends JPanel{
         }
     }
 
-   
     private void initializeCountries() 
     {
         countries = new Country[42];
@@ -527,7 +523,6 @@ public class Board extends JPanel{
     {
         java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
         g2.setStroke(new java.awt.BasicStroke(5));
-
     }
 
     
