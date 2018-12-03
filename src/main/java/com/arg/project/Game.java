@@ -58,9 +58,7 @@ public class Game implements Runnable {
         final JPanel cardPanel = new JPanel();
         cardPanel.setPreferredSize(new Dimension(150, 210));
         statusPanel.setPreferredSize(new Dimension(150,0 ));
-        //statusPanel.setBackground(Color.CYAN);
-       // cardPanel.setBackground(Color.blue);
-
+        
 
         final JLabel diceLabel = new JLabel(" Your Roll:    Enemy Roll:" );
         //diceLabel.setBackground(Color.CYAN);
