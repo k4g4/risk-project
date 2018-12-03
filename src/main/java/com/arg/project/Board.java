@@ -610,9 +610,7 @@ public class Board extends JPanel{
     }
 
 
-    /* selects a country and stores it given that the current player owns it
-     * @param mouse for the mouse click location
-     */
+    
     private void selectOwnerCountry(Point mouse) {
         for (Country c : players[turn].countriesOwned) {
             if (c.inBounds(mouse) && c.numSoldiers > 1) {
