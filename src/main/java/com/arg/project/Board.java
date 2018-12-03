@@ -31,15 +31,11 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import org.telegram.telegrambots.*;
- //import org.telegram.telegrambots.api.methods.send.SendMessage;
-// import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
- //import org.telegram.telegrambots.meta.api.objects.Update;
-// import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -78,7 +74,6 @@ public class Board extends JPanel{
     static Country[] countries;
     public static final int BOARD_WIDTH = 1350;
     public static final int BOARD_HEIGHT = 900;
-    //setBackground(new Color(1.0f,1.0f,1.0f,0.5f));
 
     public static List<String> amazonlogtext = new ArrayList<String>();
     public static Color player1 = new Color(0.0f, 0.0f, 1.0f, 0.5f);
@@ -89,7 +84,6 @@ public class Board extends JPanel{
     public static Color player6 = new Color(1.0f, 1.0f, 1.0f, 0.5f);
 
     public static final Color[] colors = {player1, player2, player3, player4, player5, player6};
-
     private static int turn = 0;
 
     private static int troopsToPlace;
@@ -100,7 +94,8 @@ public class Board extends JPanel{
     private final Dice diceInfo;
     private static Player[] players;
 
-    enum Mode {
+    enum Mode 
+    {
         UseCardMode, InitialPlacingMode, PlacingMode, AttackFromMode, AttackToMode,
         KeepAttackingMode, NewCountryMode, FortifyFromMode, FortifyToMode,
         KeepFortifyingMode, GameOverMode;
@@ -108,7 +103,8 @@ public class Board extends JPanel{
 
     private static Mode mode = Mode.InitialPlacingMode;
 
-    public Board(final JLabel turnInfo, final JLabel[] cardInfo, Dice diceInfo, int numPlayers) {
+    public Board(final JLabel turnInfo, final JLabel[] cardInfo, Dice diceInfo, int numPlayers) 
+    {
 
         this.turnInfo = turnInfo;
         this.cardInfo = cardInfo;
@@ -126,11 +122,14 @@ public class Board extends JPanel{
 
         turnInfo.setText(getStringForMode());
 
-        addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
+        addMouseListener(new MouseAdapter() 
+        {
+            public void mousePressed(MouseEvent e) 
+            {
                 Point mouse = e.getPoint();
 
-                switch (mode) {
+                switch (mode) 
+                {
                 case UseCardMode:
                     break;
                 case InitialPlacingMode:
@@ -158,7 +157,8 @@ public class Board extends JPanel{
                     selectFortify(mouse);
                     break;
                 case KeepFortifyingMode:
-                    if (selectedSecondCountry.inBounds(mouse)) {
+                    if (selectedSecondCountry.inBounds(mouse)) 
+                    {
                         fortify();
                     }
                     break;
@@ -175,9 +175,11 @@ public class Board extends JPanel{
     }
     int[] totalCaptured;
     int numbPlayers = 0;
-    private void initializePlayers(int numPlayers) {
+    private void initializePlayers(int numPlayers) 
+    {
         players = new Player[numPlayers];
-        for (int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < numPlayers; i++) 
+        {
             players[i] = new Player();
         }
         totalCaptured = new int[numPlayers];
@@ -188,7 +190,8 @@ public class Board extends JPanel{
     /* creates the ArrayList of Set<Country> that represents continents
      * necessary for checking continent bonuses
      */
-    private void initializeContinents() {
+    private void initializeContinents() 
+    {
 
         continents = new ArrayList<Set<Country>>();
         for (int i = 0; i < 6; i++) {
@@ -232,7 +235,8 @@ public class Board extends JPanel{
     }
 
    
-    private void initializeCountries() {
+    private void initializeCountries() 
+    {
         countries = new Country[42];
         countries[0] = new Country("Alaska", 85, 210, 50, 50);
         countries[1] = new Country("Alberta", 220, 280, 50, 50);
@@ -443,19 +447,22 @@ public class Board extends JPanel{
 
         countries[41].adjacentCountries = new TreeSet<Country>();
 
-        for (int i = 0; i < countries.length; i++) {
-            for (Country c : countries[i].adjacentCountries) {
+        for (int i = 0; i < countries.length; i++) 
+        {
+            for (Country c : countries[i].adjacentCountries) 
+            {
                 c.adjacentCountries.add(countries[i]);
             }
         }
 
     }
 
-    /* creates a shuffled array of countries
-     */
-    private Country[] shuffleCountries() {
+    /* creates a shuffled array of countries */
+    private Country[] shuffleCountries() 
+    {
         Country[] shuffledCountries = countries.clone();
-        for (int i = 0; i < countries.length; i++) {
+        for (int i = 0; i < countries.length; i++) 
+        {
             int j = i + (int) ((countries.length - i) * Math.random());
             Country temp = shuffledCountries[i];
             shuffledCountries[i] = shuffledCountries[j];
@@ -466,11 +473,14 @@ public class Board extends JPanel{
 
    
     private static Timer timer;
-    private void launchSomeTimer() {
-        TimerTask timerTask = new TimerTask() {
+    private void launchSomeTimer() 
+    {
+        TimerTask timerTask = new TimerTask() 
+        {
 
             @Override
-            public void run() {
+            public void run() 
+            {
             	System.out.println("Going to next player");
             	nextPlayer();
 
@@ -481,12 +491,15 @@ public class Board extends JPanel{
 
     }
 
-    public static void resetSomeTimer() {
+    public static void resetSomeTimer() 
+    {
     	System.out.println("Resettig timer");
-        TimerTask timerTask = new TimerTask() {
+        TimerTask timerTask = new TimerTask() 
+        {
 
             @Override
-            public void run() {
+            public void run() 
+            {
             	nextPlayer();
             }
         };
@@ -498,30 +511,33 @@ public class Board extends JPanel{
     }
 
 
-    private void initialCountryOwners(int numPlayers) {
+    private void initialCountryOwners(int numPlayers) 
+    {
         int playerID = 0;
         Country[] shuffledCountries = shuffleCountries();
-        for (int i = 0; i < countries.length; i++) {
+        for (int i = 0; i < countries.length; i++) 
+        {
             players[playerID].countriesOwned.add(shuffledCountries[i]);
             playerID = (playerID + 1) % numPlayers;
         }
         launchSomeTimer();
     }
 
-
-
-   
-    private void drawLines(Graphics g) {
+    private void drawLines(Graphics g) 
+    {
         java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
         g2.setStroke(new java.awt.BasicStroke(5));
 
     }
 
     
-    private void checkWin() {
+    private void checkWin() 
+    {
         int numDead = 0;
-        for (Player p : players) {
-            if (p.dead) {
+        for (Player p : players) 
+        {
+            if (p.dead) 
+            {
                 numDead++;
             }
         }
@@ -538,10 +554,10 @@ public class Board extends JPanel{
         		twitter.setOAuthAccessToken(accessToken);
         		try {
         			Status status = twitter.updateStatus("Player " + i +  " captured " + totalCaptured[i-1] + " territories total.") ;
-              //String faketext = "testing";
-              String texttotelegram = "Player " + i +  " captured " + totalCaptured[i-1] + " territories total.";
-              MyAmazingBot.sendSampleText(texttotelegram);
-            } catch (TwitterException e) {
+                //String faketext = "testing";
+                String texttotelegram = "Player " + i +  " captured " + totalCaptured[i-1] + " territories total.";
+                MyAmazingBot.sendSampleText(texttotelegram);
+            }   catch (TwitterException e) {
         			
         			e.printStackTrace();
         		}
@@ -549,93 +565,105 @@ public class Board extends JPanel{
         }
     }
 
-    
-
-
-
-
-    private void placeSoldier(Point mouse) {
+    private void placeSoldier(Point mouse) 
+    {
     	resetSomeTimer();
 
-
-        for (Country c : players[turn].countriesOwned) {
-            if (c.inBounds(mouse)) {
+        for (Country c : players[turn].countriesOwned) 
+        {
+            if (c.inBounds(mouse)) 
+            {
                 c.numSoldiers++;
                 troopsToPlace--;
             }
         }
-        if (troopsToPlace == 0) {
-            if (mode == Mode.InitialPlacingMode){
+        if (troopsToPlace == 0) 
+        {
+            if (mode == Mode.InitialPlacingMode)
+            {
                 turn++;
-                if (turn == players.length) {
+                if (turn == players.length) 
+                {
                     turn = 0;
                     updateTroopsToPlace();
                     nextMode();
-                } else {
+                } 
+                else 
+                {
                     initialTroopsToPlace();
                 }
-            } else {
+            } 
+            else 
+            {
                 nextMode();
             }
         }
     }
-
-    
-    private void initialTroopsToPlace() {
+   
+    private void initialTroopsToPlace() 
+    {
 
         int countriesOwned = players[turn].countriesOwned.size();
         troopsToPlace = 40 - countriesOwned - (players.length - 2) * 5;
-    }
-    
-    private static boolean continentOwned(int continent) {
-        for (Country c : continents.get(continent)) {
-            if (!players[turn].countriesOwned.contains(c)) {
+    }   
+    private static boolean continentOwned(int continent) 
+    {
+        for (Country c : continents.get(continent)) 
+        {
+            if (!players[turn].countriesOwned.contains(c)) 
+            {
                 return false;
             }
         }
         return true;
     }
 
-   
-    private static void updateTroopsToPlace() {
+    private static void updateTroopsToPlace() 
+    {
 
         int countryBonus = players[turn].countriesOwned.size() / 3;
         troopsToPlace = Math.max(3, countryBonus);
 
-        for (int i = 0; i < Board.continentBonuses.length; i++) {
-            if (continentOwned(i)) {
+        for (int i = 0; i < Board.continentBonuses.length; i++) 
+        {
+            if (continentOwned(i)) 
+            {
                 troopsToPlace += continentBonuses[i];
             }
         }
     }
 
 
-    
-    private void selectOwnerCountry(Point mouse) {
-        for (Country c : players[turn].countriesOwned) {
-            if (c.inBounds(mouse) && c.numSoldiers > 1) {
+    private void selectOwnerCountry(Point mouse) 
+    {
+        for (Country c : players[turn].countriesOwned) 
+        {
+            if (c.inBounds(mouse) && c.numSoldiers > 1) 
+            {
                 selectedCountry = c;
                 nextMode();
             }
         }
     }
 
-    
-    private void selectEnemyCountry(Point mouse) {
+    private void selectEnemyCountry(Point mouse) 
+    {
     	resetSomeTimer();
-
-        
-        if (selectedCountry.inBounds(mouse)) {
+        if (selectedCountry.inBounds(mouse)) 
+        {
             selectedCountry = null;
             mode = Mode.AttackFromMode;
             return;
         }
-        for (Country c : selectedCountry.adjacentCountries) {
-            if (c.inBounds(mouse) && !players[turn].countriesOwned.contains(c)) {
+        for (Country c : selectedCountry.adjacentCountries) 
+        {
+            if (c.inBounds(mouse) && !players[turn].countriesOwned.contains(c)) 
+            {
                 selectedSecondCountry = c;
                 attack(selectedCountry, selectedSecondCountry);
                 checkOutcome();
-                if (mode == Mode.AttackToMode) {
+                if (mode == Mode.AttackToMode) 
+                {
                     nextMode();
                 }
             }
@@ -643,10 +671,14 @@ public class Board extends JPanel{
     }
 
     
-    private void insertSort(int[] arr) {
-        for (int i = 1; i < arr.length; i++) {
-            for (int j = i; j > 0; j--) {
-                if (arr[j] > arr[j - 1]) {
+    private void insertSort(int[] arr) 
+    {
+        for (int i = 1; i < arr.length; i++) 
+        {
+            for (int j = i; j > 0; j--) 
+            {
+                if (arr[j] > arr[j - 1]) 
+                {
                     int temp = arr[j];
                     arr[j] = arr[j - 1];
                     arr[j - 1] = temp;
@@ -656,38 +688,47 @@ public class Board extends JPanel{
     }
 
     
-    private int roll() {
+    private int roll() 
+    {
         return (int) Math.ceil(6 * Math.random());
     }
 
-    
-     Country acountry;
-    private void attack(Country own, Country enemy) {
+    Country acountry;
+    private void attack(Country own, Country enemy) 
+    {
     	resetSomeTimer();
         int[] atkDice = new int[3];
         int[] defDice = new int[2];
         acountry = own;
-
-        for (int i = 0; i < Math.min(atkDice.length, own.numSoldiers - 1); i++) {
+        for (int i = 0; i < Math.min(atkDice.length, own.numSoldiers - 1); i++) 
+        {
             atkDice[i] = roll();
         }
 
-        for (int i = 0; i < Math.min(defDice.length, enemy.numSoldiers); i++) {
+        for (int i = 0; i < Math.min(defDice.length, enemy.numSoldiers); i++) 
+        {
             defDice[i] = roll();
         }
 
         insertSort(atkDice);
         insertSort(defDice);
 
-        if (atkDice[0] > defDice[0]) {
+        if (atkDice[0] > defDice[0]) 
+        {
             enemy.numSoldiers--;
-        } else {
+        }
+        else 
+        {
             own.numSoldiers--;
         }
-        if (atkDice[1] != 0 && defDice[1] != 0) {
-            if (atkDice[1] > defDice[1] && atkDice[1] != 0 && defDice[1] != 0) {
+        if (atkDice[1] != 0 && defDice[1] != 0) 
+        {
+            if (atkDice[1] > defDice[1] && atkDice[1] != 0 && defDice[1] != 0) 
+            {
                 enemy.numSoldiers--;
-            } else {
+            } 
+            else 
+            {
                 own.numSoldiers--;
             }
         }
@@ -701,15 +742,19 @@ public class Board extends JPanel{
     }
 
     
-    private void checkOutcome() {
-        if (selectedCountry.numSoldiers == 1) {
+    private void checkOutcome() 
+    {
+        if (selectedCountry.numSoldiers == 1) 
+        {
             selectedCountry = null;
             selectedSecondCountry = null;
             mode = Mode.AttackFromMode;
             return;
         }
-        if (selectedSecondCountry.numSoldiers == 0) {
-            if (!Player.wonCardAlready) {
+        if (selectedSecondCountry.numSoldiers == 0) 
+        {
+            if (!Player.wonCardAlready) 
+            {
                 players[turn].winCard();
                 Player.wonCardAlready = true;
             }
@@ -719,41 +764,45 @@ public class Board extends JPanel{
         }
     }
 
-    private void keepAttacking(Point mouse) {
+    private void keepAttacking(Point mouse) 
+    {
     	resetSomeTimer();
-
         // unselect the country to attack from
-        if (selectedCountry.inBounds(mouse)) {
+        if (selectedCountry.inBounds(mouse)) 
+        {
             selectedCountry = null;
             selectedSecondCountry = null;
             mode = Mode.AttackFromMode;
             return;
         }
-
-        if (selectedSecondCountry.inBounds(mouse)) {
+        if (selectedSecondCountry.inBounds(mouse)) 
+        {
             attack(selectedCountry, selectedSecondCountry);
             checkOutcome();
         }
-
     }
 
-    /* takes all the troops remaining after a conquest and allow them to be placed
-     */
-    private void conquer() {
+    /* takes all the troops remaining after a conquest and allow them to be placed */
+    private void conquer() 
+    {
     	resetSomeTimer();
     	capturedTerritories++;
         Player enemy = null;
-        for (Player p : players) {
-            if (p.countriesOwned.contains(selectedSecondCountry)) {
+        for (Player p : players) 
+        {
+            if (p.countriesOwned.contains(selectedSecondCountry)) 
+            {
                 enemy = p;
             }
         }
         enemy.countriesOwned.remove(selectedSecondCountry);
         players[turn].countriesOwned.add(selectedSecondCountry);
 
-        if (enemy.countriesOwned.isEmpty()) {
+        if (enemy.countriesOwned.isEmpty()) 
+        {
             enemy.dead = true;
-            for (int i = 0; i < enemy.cards.length; i++) {
+            for (int i = 0; i < enemy.cards.length; i++) 
+            {
                 players[turn].cards[i] += enemy.cards[i];
             }
         }
@@ -764,19 +813,17 @@ public class Board extends JPanel{
         selectedCountry.numSoldiers = 1;
 
         // deal with edge case where there are no remaining soldiers right after a conquest
-        if (troopsToPlace == 0) {
+        if (troopsToPlace == 0) 
+        {
             selectedCountry = null;
             selectedSecondCountry = null;
             nextMode();
         }
 
-
         if(turn==0)
-            JOptionPane.showMessageDialog(null,
-            	    "Player 2, you are being attacked.");
+            JOptionPane.showMessageDialog(null,"Player 2, you are being attacked.");
         if(turn==1)
-           	JOptionPane.showMessageDialog(null,
-               	    "Player 1, you are being attacked.");
+           	JOptionPane.showMessageDialog(null,"Player 1, you are being attacked.");
     }
 
     /* place a soldier in a newly conquered country
@@ -906,23 +953,18 @@ public class Board extends JPanel{
         }
     }
 
-    /* Allows the player to move on to the next phase of the game
-     * This function is used by the Next button
-     */
-
+ 
 
     public void save(){
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         try{
-            // Create new file
-            //String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-            //String a = current date;
-            //String content = "This is the content to write into create file";
+
             String path = timeStamp + "_risklog.txt";
             File file = new File(path);
 
             // If file doesn't exists, then create it
-            if (!file.exists()) {
+            if (!file.exists()) 
+            {
                 file.createNewFile();
             }
 
@@ -930,17 +972,10 @@ public class Board extends JPanel{
             BufferedWriter bw = new BufferedWriter(fw);
 
             // Write in file
-            //bw.write(content);
-            //bw.write(out,amazonlogtext,Charset.defaultCharset());
-
             int listsize = amazonlogtext.size(); 
             for (int a = 0; a < listsize; a++) {
-            //a.amazonlogtext.add(asdf10); 
-            //bw.write("/n") 
             String sample = amazonlogtext.get(a) + "\r\n";
             bw.write(sample);
-            //bw.write("\n"); 
-
             }
 
             // Close connection
@@ -954,106 +989,23 @@ public class Board extends JPanel{
         System.out.println("Game log saved");
 
          /*
-        String clientRegion = "us-east-2"; //String clientRegion = "*** Client region ***";
-        String bucketName = "risk-project"; //String bucketName = "*** Bucket name ***";
-        String keyName = "AKIAJ673ISJSSODR5YSA";  //String keyName = "*** Key name ***"; AKIAJ673ISJSSODR5YSA AKIAIYPP5T2RBC4HDICA
-        String filePath = "risklog.txt";
-        
-        File file = new File(filePath);
-        long contentLength = file.length();
-        long partSize = 5 * 1024 * 1024; // Set part size to 5 MB. 
 
-        try {
-            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                                    .withRegion(clientRegion)
-                                    .withCredentials(new ProfileCredentialsProvider())
-                                    .build();
-                       
-            // Create a list of ETag objects. You retrieve ETags for each object part uploaded,
-            // then, after each individual part has been uploaded, pass the list of ETags to 
-            // the request to complete the upload.
-            List<PartETag> partETags = new ArrayList<PartETag>();
-
-            // Initiate the multipart upload.
-            InitiateMultipartUploadRequest initRequest = new InitiateMultipartUploadRequest(bucketName, keyName);
-            InitiateMultipartUploadResult initResponse = s3Client.initiateMultipartUpload(initRequest);
-
-            // Upload the file parts.
-            long filePosition = 0;
-            for (int i = 1; filePosition < contentLength; i++) {
-                // Because the last part could be less than 5 MB, adjust the part size as needed.
-                partSize = Math.min(partSize, (contentLength - filePosition));
-
-                // Create the request to upload a part.
-                UploadPartRequest uploadRequest = new UploadPartRequest()
-                        .withBucketName(bucketName)
-                        .withKey(keyName)
-                        .withUploadId(initResponse.getUploadId())
-                        .withPartNumber(i)
-                        .withFileOffset(filePosition)
-                        .withFile(file)
-                        .withPartSize(partSize);
-
-                // Upload the part and add the response's ETag to our list.
-                UploadPartResult uploadResult = s3Client.uploadPart(uploadRequest);
-                partETags.add(uploadResult.getPartETag());
-
-                filePosition += partSize;
-            }
-
-            // Complete the multipart upload.
-            CompleteMultipartUploadRequest compRequest = new CompleteMultipartUploadRequest(bucketName, keyName,
-                    initResponse.getUploadId(), partETags);
-            s3Client.completeMultipartUpload(compRequest);
-        }
-        catch(AmazonServiceException e) {
-            // The call was transmitted successfully, but Amazon S3 couldn't process 
-            // it, so it returned an error response.
-            e.printStackTrace();
-        }
-        catch(SdkClientException e) {
-            // Amazon S3 couldn't be contacted for a response, or the client
-            // couldn't parse the response from Amazon S3.
-            e.printStackTrace();
-        }        
-
-
-
-            
-        try {
-            //Whatever the file path is.
-            File statText = new File("statsTest.txt");
-            FileOutputStream is = new FileOutputStream(statText);
-            OutputStreamWriter osw = new OutputStreamWriter(is);    
-            Writer w = new BufferedWriter(osw);
-            w.write("POTATO!!!");
-            w.close();
-        } catch (IOException e) {
-            System.err.println("Problem writing to the file statsTest.txt");
-        } 
         */
 
     }
-    public void undo(){
 
 
-
-
-
+    public void undo()
+    {
       acountry.numSoldiers++;
       players[turn].cards[4]=players[turn].cards[4]-1;
-
       System.out.println("did the undo button register");
 
     }
+
+
     public void next()
     { 
-
-
-
-    
-
-
         System.out.println("playercommandboardjava");
         String samples = "end";
         System.out.println(samples);
@@ -1114,7 +1066,8 @@ public class Board extends JPanel{
     /* increments the turn to the next living player and resets all of the
      * board state information to the current player
      */
-    protected static void nextPlayer() {
+    protected static void nextPlayer() 
+    {
     	resetSomeTimer();
         selectedCountry = null;
         selectedSecondCountry = null;
@@ -1127,23 +1080,26 @@ public class Board extends JPanel{
 		try {
 
 			Status status = twitter.updateStatus("Player " + (turn + 1) + " captured " + capturedTerritories + " territories this turn.") ;
-      String sendingaction ="Player " + (turn + 1) + " captured " + capturedTerritories + " territories this turn." ;
-      MyAmazingBot.sendSampleText(sendingaction);
-    } catch (TwitterException e) {
+        String sendingaction ="Player " + (turn + 1) + " captured " + capturedTerritories + " territories this turn." ;
+        MyAmazingBot.sendSampleText(sendingaction);
+    }   catch (TwitterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         turn = (turn + 1) % players.length;
-        while (players[turn].dead) {
+        while (players[turn].dead) 
+        {
             turn = (turn + 1) % players.length;
         }
-        if (players[turn].hasSet()) {
+        if (players[turn].hasSet()) 
+        {
             mode = Mode.UseCardMode;
-        } else {
+        } 
+        else 
+        {
             mode = Mode.PlacingMode;
         }
         updateTroopsToPlace();
-
         capturedTerritories=0;
         players[turn].cards[4] = players[turn].cards[4]+1;
     }
@@ -1152,54 +1108,56 @@ public class Board extends JPanel{
      * on the end of a turn, iterates to next player
      */
 
-    private void nextMode() {
+    private void nextMode() 
+    {
         System.out.println("playercommandboardjava");
         String samples = "end";
         System.out.println(samples);
         System.out.println(MyAmazingBot.playercommand);
         System.out.println("playercommandboardjava");
         String testing = MyAmazingBot.playercommand;
-        if(testing == samples){
+        if(testing == samples)
+        {
             nextPlayer();
             MyAmazingBot.playercommand = null;
         }
-        else{
+        else
+        {
 
-
-        switch(mode) {
-        case UseCardMode:
-            mode = Mode.PlacingMode;
-            break;
-        case InitialPlacingMode:
-            mode = Mode.PlacingMode;
-            break;
-        case PlacingMode:
-            mode = Mode.AttackFromMode;
-            break;
-        case AttackFromMode:
-            mode = Mode.AttackToMode;
-            break;
-        case AttackToMode:
-            mode = Mode.KeepAttackingMode;
-            break;
-        case KeepAttackingMode:
-            mode = Mode.NewCountryMode;
-            break;
-        case NewCountryMode:
-            mode = Mode.AttackFromMode;
-            break;
-        case FortifyFromMode:
-            mode = Mode.FortifyToMode;
-            break;
-        case FortifyToMode:
-            mode = Mode.KeepFortifyingMode;
-            break;
-        case KeepFortifyingMode:
-            nextPlayer();
-            break;
-        case GameOverMode:
-            break;
-        }
+            switch(mode) {
+            case UseCardMode:
+                mode = Mode.PlacingMode;
+                break;
+            case InitialPlacingMode:
+                mode = Mode.PlacingMode;
+                break;
+            case PlacingMode:
+                mode = Mode.AttackFromMode;
+                break;
+            case AttackFromMode:
+                mode = Mode.AttackToMode;
+                break;
+            case AttackToMode:
+                mode = Mode.KeepAttackingMode;
+                break;
+            case KeepAttackingMode:
+                mode = Mode.NewCountryMode;
+                break;
+            case NewCountryMode:
+                mode = Mode.AttackFromMode;
+                break;
+            case FortifyFromMode:
+                mode = Mode.FortifyToMode;
+                break;
+            case FortifyToMode:
+                mode = Mode.KeepFortifyingMode;
+                break;
+            case KeepFortifyingMode:
+                nextPlayer();
+                break;
+            case GameOverMode:
+                break;
+            }
         }
     }
 
@@ -1207,8 +1165,10 @@ public class Board extends JPanel{
      * can place accordingly
      * This function is used by the Use button
      */
-    public void useCards() {
-        if (mode != Mode.UseCardMode) {
+    public void useCards() 
+    {
+        if (mode != Mode.UseCardMode) 
+        {
             return;
         }
         int bonus = Player.cardBonus();
@@ -1216,7 +1176,8 @@ public class Board extends JPanel{
         turnInfo.setText("You just traded in a set for " + bonus + " soldiers!");
         players[turn].useSet();
         setCardLabels();
-        if (!players[turn].hasSet()) {
+        if (!players[turn].hasSet()) 
+        {
             nextMode();
         }
 
@@ -1224,7 +1185,8 @@ public class Board extends JPanel{
 
     /* updates the text displaying the card status
      */
-    public void setCardLabels() {
+    public void setCardLabels() 
+    {
         String[] cardLabels = players[turn].StringOfCards();
         for (int i = 0; i < cardLabels.length; i++) {
             cardInfo[i].setText(cardLabels[i]);
@@ -1232,27 +1194,26 @@ public class Board extends JPanel{
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) 
+    {
     	super.paintComponent(g);
-    	g.setColor(new Color(255, 255, 255));
-        //g.finalize();
-        //g.setColor(new Color(255, 255, 255));
-       // final BufferedImage image = ImageIO.read(new File("mapbackground.PNG"));
-
-        //super.paintComponent(g);
+    	g.setColor(new Color(255, 255, 255));   
         super.paintComponent(g);
-        //g.drawImage(img, 0, 0, this);
         g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
         Image picture = Toolkit.getDefaultToolkit().getImage("mapbackground.PNG");
         g.drawImage(picture, 10, 10, this);
+        
         for (int i = 0; i < players.length; i++) {
             Player player = players[i];
             for(Country c : player.countriesOwned) {
                 g.setColor(colors[i]);
 
-                if (c == selectedCountry || c == selectedSecondCountry) {
+                if (c == selectedCountry || c == selectedSecondCountry) 
+                {
                     c.highlight();
-                } else {
+                } 
+                else 
+                {
                     c.unhighlight();
                 }
                 c.draw(g);

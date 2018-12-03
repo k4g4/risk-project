@@ -49,8 +49,7 @@ public class Country implements Comparable<Country> {
         return height;
     }
     
-    /* draws the country and displays the number of soldiers
-     */
+    /* draws the country and displays the number of soldiers*/
     public void draw(Graphics g) {
         if (selected) {
             Color highlighted = g.getColor().darker();

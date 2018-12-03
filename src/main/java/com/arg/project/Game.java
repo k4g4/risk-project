@@ -1,8 +1,5 @@
 package com.arg.project;
 import com.arg.project.AmazonS3Example;
-//import com.arg.projec.Dice;
-//package org.telegram.telegrambots;
-//import org.telegram.telegrambots.bots;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -13,13 +10,10 @@ import java.awt.Component;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
-//import org.telegram.*;
 import org.telegram.telegrambots.*;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-//import org.telegram.telegrambots.TelegramBotsApi;
-//import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 public class Game implements Runnable {
 
@@ -60,25 +54,21 @@ public class Game implements Runnable {
         statusPanel.setPreferredSize(new Dimension(150,0 ));
         
 
-        final JLabel diceLabel = new JLabel(" Your Roll:    Enemy Roll:" );
-        //diceLabel.setBackground(Color.CYAN);
+        final JLabel diceLabel = new JLabel(" Your Roll:    Enemy Roll:" ); 
         diceLabel.setPreferredSize(new Dimension(150, 40 ));
-        //diceLabel.setBackground(Color.CYAN);
-
+        
         final JPanel spacer = new JPanel();
         spacer.setPreferredSize(new Dimension(150, 80));
-        //spacer.setBackground(Color.CYAN);
+        
 
 
         final JLabel[] cardInfo = new JLabel[9];
         for (int i = 0; i < cardInfo.length; i++) {
             cardInfo[i] = new JLabel();
-            //cardInfo[i].setAlignmentX(Component.LEFT_ALIGNMENT);
             cardPanel.add(cardInfo[i]);
         }
-        // hey
-        Dice diceInfo = new Dice();
-        //diceInfo.setBackground(Color.yellow);
+
+        Dice diceInfo = new Dice();  
         diceInfo.setPreferredSize(new Dimension(150,180 ));
 
         final Board board = new Board(turnInfo, cardInfo, diceInfo, numPlayers);
@@ -126,9 +116,6 @@ public class Game implements Runnable {
         });
 
 
-
-        //statusPanel.add(next,BorderLayout.SOUTH);
-        //statusPanel.add(cardPanel);
         statusPanel.add(diceLabel);
         statusPanel.add(diceInfo);
         statusPanel.add(spacer);
@@ -163,10 +150,6 @@ public class Game implements Runnable {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-
-
-        //amazon stuff
-
 
 
     }

@@ -41,8 +41,7 @@ public class Dice extends JPanel {
         }
 
     }
-    /* JComponent representing one die
-     */
+    /* JComponent representing one die */
     public class Die extends JComponent {
         private int die;
         private boolean isRed;

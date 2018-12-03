@@ -45,8 +45,7 @@ public class AmazonS3Example {
 		// create empty content
 		InputStream emptyContent = new ByteArrayInputStream(new byte[0]);
 		// create a PutObjectRequest passing the folder name suffixed by /
-		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName,
-				folderName + SUFFIX, emptyContent, metadata);
+		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName,folderName + SUFFIX, emptyContent, metadata);
 		// send request to S3 to create folder
 		client.putObject(putObjectRequest);
 	}
