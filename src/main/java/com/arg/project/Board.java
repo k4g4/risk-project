@@ -255,7 +255,7 @@ public class Board extends JPanel{
         countries[17] = new Country("Ukraine", 760, 270, 50, 50);
         countries[18] = new Country("Southern Europe", 690, 355, 50, 50);
         countries[19] = new Country("Western Europe", 610, 360, 50, 50);
-        countries[20] = new Country("Madagascar", 540, 400, 20, 40);
+        countries[20] = new Country("Madagascar", 785, 670, 50, 50);
         countries[21] = new Country("Egypt", 700, 440, 50, 50);
         countries[22] = new Country("North Africa", 625, 490, 50, 50);
         countries[23] = new Country("East Africa", 750, 540, 50, 50);
