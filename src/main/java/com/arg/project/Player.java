@@ -58,8 +58,7 @@ public class Player {
         return bonus;
     }
 
-    /* creates the String[] used in the JLabel for cardInfo
-     */
+    /* creates the String[] used in the JLabel for cardInfo */
     public String[] StringOfCards() {
         String[] stringOfCards = new String[9];
         stringOfCards[1] = "Cards:                          ";
@@ -71,11 +70,9 @@ public class Player {
         stringOfCards[7] = "Bonus: " + cardBonus()+ "                   ";
         stringOfCards[8] = "Currency: " + cards[4]+ "              ";
         return stringOfCards;
-
-
-
-
     }
+
+
 
     public boolean fullHand() {
         int sum = 0;
@@ -85,10 +82,7 @@ public class Player {
         if (sum >= 5) {
             return true;
         }
-
         return false;
-
-
     }
 
     /* checks if a player has a set of cards that can be turned in */
