@@ -6,7 +6,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 
-public class Player {
+public class Player 
+{
     int[] cards;
     Set<Country> countriesOwned;
     static List<Integer> deck;
@@ -14,27 +15,28 @@ public class Player {
     static boolean wonCardAlready;
     boolean dead;
 
-    public Player() {
+    public Player() 
+    {
         cards = new int[5];
         countriesOwned = new TreeSet<Country>();
     }
     
-    public static void initialDeck() {
+    public static void initialDeck() 
+    {
         deck = new LinkedList<Integer>();
-        for (int i = 0; i < 14; i++) {
+        for (int i = 0; i < 14; i++) 
+        {
             deck.add(0);
             deck.add(1);
             deck.add(2);
         }
         deck.add(3);
         deck.add(3);
-
         shuffleDeck();
 
         //long chat_id4 = -254512808;
         String message_text4 = "Initializing Risk Game";
         MyAmazingBot.sendSampleText(message_text4);
-
 
     }
 
@@ -45,9 +47,7 @@ public class Player {
             deck.add(0, card);
         }
     }
-
-    /* calculates the current card bonus for turning in a set of cards
-     */
+    /* calculates the current card bonus for turning in a set of cards */
     public static int cardBonus() {
         int bonus;
         if (cardBonusIndex < 5) {
