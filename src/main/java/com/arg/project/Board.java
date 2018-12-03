@@ -549,10 +549,7 @@ public class Board extends JPanel{
         }
     }
 
-    /* places soldier in a country provided the current player owns the country
-     * moves on to next mode after all soldiers have been placed
-     * @param: mouse for the mouse click location
-     */
+    
 
 
 
@@ -583,16 +580,13 @@ public class Board extends JPanel{
         }
     }
 
-    /* calculates the initial troops for a player to place
-     */
+    
     private void initialTroopsToPlace() {
 
         int countriesOwned = players[turn].countriesOwned.size();
         troopsToPlace = 40 - countriesOwned - (players.length - 2) * 5;
     }
-    /* return true if current player owns the continent, false otherwise
-     * @param continent index for continent
-     */
+    
     private static boolean continentOwned(int continent) {
         for (Country c : continents.get(continent)) {
             if (!players[turn].countriesOwned.contains(c)) {
