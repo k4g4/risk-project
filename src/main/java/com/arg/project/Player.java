@@ -91,8 +91,7 @@ public class Player {
 
     }
 
-    /* checks if a player has a set of cards that can be turned in
-     */
+    /* checks if a player has a set of cards that can be turned in */
     public boolean hasSet() {
         return hasSet1() || hasSet2();
     }
@@ -116,8 +115,7 @@ public class Player {
         return cards[0] > 0 && cards[1] > 0 && cards[2] > 0;
     }
 
-    /* uses a set of the player's cards
-     */
+    /* uses a set of the player's cards */
     public void useSet() {
         cardBonusIndex++;
         if (hasSet1()) {
