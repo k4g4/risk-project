@@ -231,8 +231,7 @@ public class Board extends JPanel{
         }
     }
 
-    /* initializes the 42 countries that make up the standard risk map
-     */
+   
     private void initializeCountries() {
         countries = new Country[42];
         countries[0] = new Country("Alaska", 85, 210, 50, 50);
