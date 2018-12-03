@@ -44,6 +44,7 @@
             }
         }
     }
+    
     public static void sendSampleText(String message_text2){
 
         long chat_id3 = -254512808;
@@ -56,7 +57,6 @@
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
-
     }
 
     //@Override
@@ -66,7 +66,6 @@
         return "RiskProjectBot";
     }
 
-    
     public String getBotToken() {
         return "757130470:AAGMcBp69MXiOv_dtdjGbmCIldC9D7B5g2E";
     }

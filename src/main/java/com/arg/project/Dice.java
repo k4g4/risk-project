@@ -5,11 +5,9 @@ import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-
 
 @SuppressWarnings("serial")
 public class Dice extends JPanel {
@@ -18,7 +16,8 @@ public class Dice extends JPanel {
     BufferedImage[] diceImage = new BufferedImage[7];
     BufferedImage[] redDiceImage = new BufferedImage[7];
 
-    public Dice() {
+    public Dice() 
+    {
         try {
             for (int i = 0; i < diceImage.length; i++) {
                 String filename = "die" + i + ".png";
@@ -39,27 +38,34 @@ public class Dice extends JPanel {
         for (int i = 0; i < dice.length; i++) {
             this.add(dice[i]);
         }
-
     }
+    
     /* JComponent representing one die */
-    public class Die extends JComponent {
+    public class Die extends JComponent 
+    {
         private int die;
         private boolean isRed;
 
-        public Die(boolean isRed) {
+        public Die(boolean isRed) 
+        {
             this.isRed = isRed;
         }
 
-        public void update(int x) {
+        public void update(int x) 
+        {
             die = x;
         }
 
         @Override
-        public void paintComponent(Graphics g) {
+        public void paintComponent(Graphics g) 
+        {
             super.paintComponent(g);
-            if (isRed) {
+            if (isRed) 
+            {
                 g.drawImage(redDiceImage[die], 0, 0, null);
-            } else {
+            } 
+            else 
+            {
                 g.drawImage(diceImage[die], 0, 0, null);
             }
         }

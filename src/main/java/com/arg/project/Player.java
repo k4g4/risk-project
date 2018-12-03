@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-
 public class Player 
 {
     int[] cards;
@@ -37,10 +36,10 @@ public class Player
         //long chat_id4 = -254512808;
         String message_text4 = "Initializing Risk Game";
         MyAmazingBot.sendSampleText(message_text4);
-
     }
 
-    private static void shuffleDeck() {
+    private static void shuffleDeck() 
+    {
         for (int i = 0; i < deck.size(); i++) {
             int r = i + (int) (Math.random() * (deck.size() - i));
             int card = deck.remove(r);
@@ -48,7 +47,8 @@ public class Player
         }
     }
     /* calculates the current card bonus for turning in a set of cards */
-    public static int cardBonus() {
+    public static int cardBonus() 
+    {
         int bonus;
         if (cardBonusIndex < 5) {
             bonus = 2 * cardBonusIndex + 4;
@@ -59,7 +59,8 @@ public class Player
     }
 
     /* creates the String[] used in the JLabel for cardInfo */
-    public String[] StringOfCards() {
+    public String[] StringOfCards() 
+    {
         String[] stringOfCards = new String[9];
         stringOfCards[1] = "Cards:                          ";
         stringOfCards[2] = "Infantry: " + cards[0] + "               ";
@@ -72,9 +73,8 @@ public class Player
         return stringOfCards;
     }
 
-
-
-    public boolean fullHand() {
+    public boolean fullHand() 
+    {
         int sum = 0;
         for (int i = 0; i < cards.length; i++) {
             sum += cards[i];
@@ -86,35 +86,44 @@ public class Player
     }
 
     /* checks if a player has a set of cards that can be turned in */
-    public boolean hasSet() {
+    public boolean hasSet() 
+    {
         return hasSet1() || hasSet2();
     }
 
-    public boolean hasSet1() {
-        if (cards[3] > 0) {
+    public boolean hasSet1() 
+    {
+        if (cards[3] > 0) 
+        {
             return cards[0] > 2 - cards[3] || cards[1] > 2 - cards[3] ||
                     cards[2] > 2 - cards[3];
         }
         return cards[0] > 2 || cards[1] > 2 || cards[2] > 2;
     }
 
-    public boolean hasSet2() {
-        if (cards[3] == 1) {
+    public boolean hasSet2() 
+    {
+        if (cards[3] == 1) 
+        {
             return (cards[0] > 0 && cards[1] > 0) || (cards[0] > 0 && cards[2] > 0) ||
                     (cards[1] > 0 && cards[2] > 0);
         }
-        if (cards[3] == 2) {
+        if (cards[3] == 2) 
+        {
             return cards[0] > 0 || cards[1] > 0 || cards[2] > 0;
         }
         return cards[0] > 0 && cards[1] > 0 && cards[2] > 0;
     }
 
     /* uses a set of the player's cards */
-    public void useSet() {
+    public void useSet() 
+    {
         cardBonusIndex++;
-        if (hasSet1()) {
+        if (hasSet1()) 
+        {
             for (int i = 0; i < 3; i++) {
-                if (cards[i] > 2) {
+                if (cards[i] > 2) 
+                {
                     cards[i] -= 3;
                     deck.add(i);
                     deck.add(i);
@@ -124,7 +133,8 @@ public class Player
             }
 
             for (int i = 0; i < 3; i++) {
-                if (cards[i] > 1) {
+                if (cards[i] > 1) 
+                {
                     cards[i] -= 2;
                     cards[3]--;
                     deck.add(i);
@@ -135,7 +145,8 @@ public class Player
             }
 
             for (int i = 0; i < 3; i++) {
-                if (cards[i] > 0) {
+                if (cards[i] > 0) 
+                {
                     cards[i]--;
                     cards[3] -= 2;
                     deck.add(i);
@@ -148,19 +159,22 @@ public class Player
 
         if (hasSet2()) {
             for (int i = 0; i < 3; i++) {
-                if (cards[i] == 0) {
+                if (cards[i] == 0) 
+                {
                     cards[3]--;
                     deck.add(3);
-                } else {
+                } 
+                else 
+                {
                     cards[i]--;
                     deck.add(i);
                 }
             }
-
         }
     }
 
-    public void winCard() {
+    public void winCard() 
+    {
         int card = deck.remove(0);
         cards[card]++;
     }

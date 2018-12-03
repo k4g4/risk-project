@@ -450,7 +450,6 @@ public class Board extends JPanel{
                 c.adjacentCountries.add(countries[i]);
             }
         }
-
     }
 
     /* creates a shuffled array of countries */
@@ -484,7 +483,6 @@ public class Board extends JPanel{
         };
         timer = new Timer();
         timer.schedule(timerTask, 30000);
-
     }
 
     public static void resetSomeTimer() 
@@ -492,7 +490,6 @@ public class Board extends JPanel{
     	System.out.println("Resettig timer");
         TimerTask timerTask = new TimerTask() 
         {
-
             @Override
             public void run() 
             {
@@ -502,10 +499,7 @@ public class Board extends JPanel{
         timer.cancel();
         timer = new Timer();
         timer.schedule(timerTask,30000);
-
-
     }
-
 
     private void initialCountryOwners(int numPlayers) 
     {
@@ -628,7 +622,6 @@ public class Board extends JPanel{
         }
     }
 
-
     private void selectOwnerCountry(Point mouse) 
     {
         for (Country c : players[turn].countriesOwned) 
@@ -665,7 +658,6 @@ public class Board extends JPanel{
         }
     }
 
-    
     private void insertSort(int[] arr) 
     {
         for (int i = 1; i < arr.length; i++) 
@@ -682,7 +674,6 @@ public class Board extends JPanel{
         }
     }
 
-    
     private int roll() 
     {
         return (int) Math.ceil(6 * Math.random());
@@ -736,7 +727,6 @@ public class Board extends JPanel{
         diceInfo.repaint();
     }
 
-    
     private void checkOutcome() 
     {
         if (selectedCountry.numSoldiers == 1) 
@@ -891,11 +881,9 @@ public class Board extends JPanel{
     /* returns a String that contains information
      * on the game state
      */
-    public String getStringForMode() {
-
+    public String getStringForMode() 
+    {
         String init = "Player " + (turn + 1) + ": ";
-        //String asdf1 = init = "Player " + (turn + 1) + ": ";
-        //amazonlogtext.add(asdf1);
         switch(mode) {
         case UseCardMode:
             if (players[turn].fullHand()) {
@@ -994,7 +982,6 @@ public class Board extends JPanel{
 
     }
 
-
     public void undo()
     {
       acountry.numSoldiers++;
@@ -1002,7 +989,6 @@ public class Board extends JPanel{
       System.out.println("did the undo button register");
 
     }
-
 
     public void next()
     { 
@@ -1082,7 +1068,7 @@ public class Board extends JPanel{
 			Status status = twitter.updateStatus("Player " + (turn + 1) + " captured " + capturedTerritories + " territories this turn.") ;
         String sendingaction ="Player " + (turn + 1) + " captured " + capturedTerritories + " territories this turn." ;
         MyAmazingBot.sendSampleText(sendingaction);
-    }   catch (TwitterException e) {
+        }   catch (TwitterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -1183,8 +1169,7 @@ public class Board extends JPanel{
 
     }
 
-    /* updates the text displaying the card status
-     */
+    /* updates the text displaying the card status */
     public void setCardLabels() 
     {
         String[] cardLabels = players[turn].StringOfCards();
@@ -1223,7 +1208,8 @@ public class Board extends JPanel{
     }
 
     @Override
-    public Dimension getPreferredSize() {
+    public Dimension getPreferredSize() 
+    {
         return new Dimension(BOARD_WIDTH, BOARD_HEIGHT);
     }
 
