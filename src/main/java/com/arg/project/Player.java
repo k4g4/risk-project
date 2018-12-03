@@ -18,9 +18,7 @@ public class Player {
         cards = new int[5];
         countriesOwned = new TreeSet<Country>();
     }
-    /* creates the Risk deck with 14 of each card type
-     * along with 2 wildcards
-     */
+    
     public static void initialDeck() {
         deck = new LinkedList<Integer>();
         for (int i = 0; i < 14; i++) {
