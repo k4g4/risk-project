@@ -596,9 +596,7 @@ public class Board extends JPanel{
         return true;
     }
 
-    /* calculates the number of troops a player can place at
-     * the beginning of his/her turn
-     */
+   
     private static void updateTroopsToPlace() {
 
         int countryBonus = players[turn].countriesOwned.size() / 3;
